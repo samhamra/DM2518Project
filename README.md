@@ -1,6 +1,9 @@
 # DM2518Project
 Project for the course DM2518Project
 
+Latest version: 
+https://people.kth.se/~victorhv/DM2518Project/
+
 
 ## timeframe
 
