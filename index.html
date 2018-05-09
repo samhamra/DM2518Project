@@ -3,179 +3,31 @@
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src='https://d3js.org/d3.v3.min.js'></script>
         <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
-
-        <script>
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyDtbCaRrJDi1WywsroMRWbagl9-rWLUlE0",
-                authDomain: "dm2518-e6d19.firebaseapp.com",
-                databaseURL: "https://dm2518-e6d19.firebaseio.com",
-                projectId: "dm2518-e6d19",
-                storageBucket: "dm2518-e6d19.appspot.com",
-                messagingSenderId: "872642898861"
-            };
-            firebase.initializeApp(config);
-            var db = firebase.database();
-        </script>
-
         <script src="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.js"></script>
-        <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.css" />
-        <script type="text/javascript">
+        <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.css"/>
+        <script src="firebaseManager.js"></script>
 
-        // FirebaseUI config.
-        var uiConfig = {
-        //signInSuccessUrl: '<url-to-redirect-to-on-success>',
-        signInOptions: [
-            // Leave the lines as is for the providers you want to offer your users.
-            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            ],
-            // Terms of service url.
-            //tosUrl: '<your-tos-url>'
-        };
+    <script type="text/javascript">
+    // FirebaseUI config.
 
-        // Initialize the FirebaseUI Widget using Firebase.
-        var ui = new firebaseui.auth.AuthUI(firebase.auth());
-        // The start method will wait until the DOM is loaded.
-        ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
 
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                $("#login").hide();
-                console.log("logged in");
-            } else {
-                console.log("not logged in, wtf?")
-            }
-        });
-   </script>
-
-   //firebase.auth().currentUser
     </head>
     <body>
-        <!-- side menu -->
-        <ons-page>
-            <ons-splitter>
-                <ons-splitter-side id="sideMenu" side="left" width="220px" collapse swipeable>
-                    <ons-page>
-                        <ons-list>
-                            <img src="img/kth-logo-1.png">
-                            <ons-list-item onclick="fn.load('wrapper.html')" tappable>
-                                Lobby
-                            </ons-list-item>
-                            <ons-list-item onclick="fn.load('profile.html')" tappable>
-                                Profile
-                            </ons-list-item>
-                            <ons-list-item onclick="fn.load('settings.html')" tappable>
-                                Settings
-                            </ons-list-item>
-                            <ons-list-item onclick="fn.load('about.html')" tappable>
-                                About
-                            </ons-list-item>
-                        </ons-list>
-                        <ons-button>
-                            Logout
-                        </ons-button>
-                    </ons-page>
-                </ons-splitter-side>
-                <ons-splitter-content id="content" page="wrapper.html">
-                </ons-splitter-content>
-            </ons-splitter>
-        </ons-page>
+      <div id="login">
+        <p> hej allihop välkommen logga in h'r
+          <div id="firebaseui-auth-container"></div>
+      </div>
 
-    </body>
+      <form id="post">
+        Name
+        <input label="name" type="text" name="name">
+        <br>
+        Message
+        <input label="message" type="text" name="message">
+        <br>
+        <button onclick="post('room1')">Post please</button>
+      </form>
+
+      <p id="main"></p>
 </html>
-
-<!-- navigator wrapper -->
-<ons-template id="wrapper.html">
-    <ons-page id="wrapper">
-        <ons-navigator id="appNavigator" page="lobby.html"></ons-navigator>
-    </ons-page>
-</ons-template>
-
-
-<template id="lobby.html">
-    <ons-page>
-        <ons-toolbar>
-            <div class="left">
-                <ons-toolbar-button onclick="fn.open()">
-                    <ons-icon icon="md-menu"></ons-icon>
-                </ons-toolbar-button>
-            </div>
-            <div class="center">
-                Lobby
-            </div>
-        </ons-toolbar>
-        <ons-list id="chat-room-list">
-            <script>
-                fn.addChatRoomToList("DD2525")
-                fn.addChatRoomToList("DD2828")
-                fn.addChatRoomToList("SF1320")
-            </script>
-        </ons-list>
-    </ons-page>
-</template>
-
-
-<!-- Chatroom template -->
-
-<ons-template id="chatroom.html">
-    <ons-page>
-        <ons-toolbar>
-            <div class="left">
-                <ons-back-button>Lobby</ons-back-button>
-            </div>
-            <div id="chat-room-header" class="center">
-            </div>
-        </ons-toolbar>
-    </ons-page>
-</ons-template>
-
-
-<!-- side menu templates -->
-
-<template id="profile.html">
-  <ons-page>
-      <ons-toolbar>
-       <div class="left">
-         <ons-toolbar-button onclick="fn.open()">
-           <ons-icon icon="md-menu"></ons-icon>
-         </ons-toolbar-button>
-       </div>
-       <div class="center">
-         Profile
-       </div>
-     </ons-toolbar>
-    <p>Profile</p>
-  </ons-page>
-</template>
-
-<template id="settings.html">
-  <ons-page>
-      <ons-toolbar>
-       <div class="left">
-         <ons-toolbar-button onclick="fn.open()">
-           <ons-icon icon="md-menu"></ons-icon>
-         </ons-toolbar-button>
-       </div>
-       <div class="center">
-         Settings
-       </div>
-     </ons-toolbar>
-    <p>Settings</p>
-  </ons-page>
-</template>
-
-<template id="about.html">
-  <ons-page>
-      <ons-toolbar>
-       <div class="left">
-         <ons-toolbar-button onclick="fn.open()">
-           <ons-icon icon="md-menu"></ons-  icon>
-         </ons-toolbar-button>
-       </div>
-       <div class="center">
-         About
-       </div>
-     </ons-toolbar>
-    <p>About</p>
-  </ons-page>
-</template>

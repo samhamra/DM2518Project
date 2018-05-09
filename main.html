@@ -1,0 +1,140 @@
+<html>
+     <head>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src='https://d3js.org/d3.v3.min.js'></script>
+        <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+        <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+        <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+        <script src="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.css"/>
+        <script src="app.js"></script>
+
+    </head>
+    <body>
+        <!-- side menu -->
+        <ons-page>
+            <ons-splitter>
+                <ons-splitter-side id="sideMenu" side="left" width="220px" collapse swipeable>
+                    <ons-page>
+                        <ons-list>
+                            <img src="img/kth-logo-1.png">
+                            <ons-list-item onclick="fn.load('wrapper.html')" tappable>
+                                Lobby
+                            </ons-list-item>
+                            <ons-list-item onclick="fn.load('profile.html')" tappable>
+                                Profile
+                            </ons-list-item>
+                            <ons-list-item onclick="fn.load('settings.html')" tappable>
+                                Settings
+                            </ons-list-item>
+                            <ons-list-item onclick="fn.load('about.html')" tappable>
+                                About
+                            </ons-list-item>
+                        </ons-list>
+                        <ons-button>
+                            Logout
+                        </ons-button>
+                    </ons-page>
+                </ons-splitter-side>
+                <ons-splitter-content id="content" page="wrapper.html">
+                </ons-splitter-content>
+            </ons-splitter>
+        </ons-page>
+
+    </body>
+</html>
+
+<!-- navigator wrapper -->
+<ons-template id="wrapper.html">
+    <ons-page id="wrapper">
+        <ons-navigator id="appNavigator" page="lobby.html"></ons-navigator>
+    </ons-page>
+</ons-template>
+
+
+<template id="lobby.html">
+    <ons-page>
+        <ons-toolbar>
+            <div class="left">
+                <ons-toolbar-button onclick="fn.open()">
+                    <ons-icon icon="md-menu"></ons-icon>
+                </ons-toolbar-button>
+            </div>
+            <div class="center">
+                Lobby
+            </div>
+        </ons-toolbar>
+        <ons-list id="chat-room-list">
+            <script>
+                console.log(window)
+            </script>
+        </ons-list>
+    </ons-page>
+</template>
+
+
+<!-- Chatroom template -->
+
+<ons-template id="chatroom.html">
+    <ons-page>
+        <ons-toolbar>
+            <div class="left">
+                <ons-back-button>Lobby</ons-back-button>
+            </div>
+            <div id="chat-room-header" class="center">
+            </div>
+        </ons-toolbar>
+    </ons-page>
+</ons-template>
+
+
+<!-- side menu templates -->
+
+<template id="profile.html">
+  <ons-page>
+      <ons-toolbar>
+       <div class="left">
+         <ons-toolbar-button onclick="fn.open()">
+           <ons-icon icon="md-menu"></ons-icon>
+         </ons-toolbar-button>
+       </div>
+       <div class="center">
+         Profile
+       </div>
+     </ons-toolbar>
+    <p>Profile</p>
+  </ons-page>
+</template>
+
+<template id="settings.html">
+  <ons-page>
+      <ons-toolbar>
+       <div class="left">
+         <ons-toolbar-button onclick="fn.open()">
+           <ons-icon icon="md-menu"></ons-icon>
+         </ons-toolbar-button>
+       </div>
+       <div class="center">
+         Settings
+       </div>
+     </ons-toolbar>
+    <p>Settings</p>
+  </ons-page>
+</template>
+
+<template id="about.html">
+  <ons-page>
+      <ons-toolbar>
+       <div class="left">
+         <ons-toolbar-button onclick="fn.open()">
+           <ons-icon icon="md-menu"></ons-  icon>
+         </ons-toolbar-button>
+       </div>
+       <div class="center">
+         About
+       </div>
+     </ons-toolbar>
+    <p>About</p>
+  </ons-page>
+</template>

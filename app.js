@@ -1,7 +1,53 @@
+
+function post(room) {
+    //get form data
+    var form = document.getElementById("post");
+    var ref = fireDataBase.ref("rooms/" + room + "/messages");
+    var newChildRef = ref.push();
+    // set form data
+    newChildRef.set({name: firebase.auth().currentUser.displayName, message: form.message.value});
+}
+
+// denna funktion ska användas för att populera chattrumlistans
+function loadChatRoomList() {
+    var ref = fireDataBase.ref("/");
+    ref.once("value", function(snapshot) {
+        snapshot.forEach(function(element) {
+            Object.keys(element.val()).forEach(function(room) {
+                console.log(room);
+                //button onclick'openroom(room)'
+                // Skapa en knapp för varje rum, med id room
+            })
+        })
+    })
+}
+
+// Kalla på denna funktion när ni har renderat ny chattsida, för att visa posts
+function openRoom(room) {
+    var ref = fireDataBase.ref("rooms/" + room + "/messages");
+    ref.on("value", function(snapshot) {
+        snapshot.forEach(function(post) {
+            console.log(post.val().name)
+            console.log(post.val().message)
+            // använd hur ni vull
+        })
+    })
+}
+
+
+/*****************************************
+                ONSEN STUFF
+    TODO: split to separate file
+*****************************************/
+
 function showPage(page) {
     // jQuery returns an array of DOM objects, we want the first DOM object
     // which is the have that has the pushPage function.
     $('#appNavigator')[0].pushPage(page)
+
+    if(page === 'lobby.html') {
+        console.log("test")
+    }
 }
 
 
@@ -25,9 +71,7 @@ function loadChatRoom() {
 
 }
 
-
 window.fn = {};
-
 
 
 window.fn.open = function() {
