@@ -80,7 +80,7 @@ var db = firebase.database();
           newChildRef.set({name: firebase.auth().currentUser.displayName, message: form.message.value});
         }
 
-
+        // denna funktion ska användas för att populera chattrumlistans
         function onload() {
           var ref = db.ref("/");
           ref.once("value", function(snapshot) {
@@ -94,7 +94,7 @@ var db = firebase.database();
           })
         }
 
-
+        // Kalla på denna funktion när ni har renderat ny chattsida, för att visa posts
         function openRoom(room) {
           var ref = db.ref("rooms/" + room + "/messages");
           ref.on("value", function(snapshot) {
