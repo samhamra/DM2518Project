@@ -8,7 +8,7 @@
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyDtbCaRrJDi1WywsroMRWbagl9-rWLUlE0",
-    authDomain: "dh2400-81a1f.firebaseapp.com",
+    authDomain: "dm2518-e6d19.firebaseapp.com",
     databaseURL: "https://dm2518-e6d19.firebaseio.com",
     projectId: "dm2518-e6d19",
     storageBucket: "dm2518-e6d19.appspot.com",
@@ -36,13 +36,25 @@ firebase.initializeApp(config);
      var ui = new firebaseui.auth.AuthUI(firebase.auth());
      // The start method will wait until the DOM is loaded.
      ui.start('#firebaseui-auth-container', uiConfig);
+
+     firebase.auth().onAuthStateChanged(function(user) {
+       if (user) {
+         $("firebaseui-auth-container").hide();
+         console.log("logged in");
+      } else {
+        console.log("not logged in, wtf?")
+      }
+    });
    </script>
 
-
+   //firebase.auth().currentUser
     </head>
     <body>
+      <div class="">
+        <p> hej allihop välkommen logga in h'r
+          <div id="firebaseui-auth-container"></div>
+      </div>
 
-      <div id="firebaseui-auth-container"></div>
       <form id="post">
         Name
         <input label="name" type="text" name="name">
