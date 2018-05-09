@@ -35,7 +35,6 @@
                     <ons-page>
                         <ons-list>
                             <img src="img/kth-logo-1.png">
-
                             <ons-list-item onclick="fn.load('wrapper.html')" tappable>
                                 Lobby
                             </ons-list-item>
@@ -65,13 +64,12 @@
 <!-- navigator wrapper -->
 <ons-template id="wrapper.html">
     <ons-page id="wrapper">
-        <ons-navigator id="appNavigator" page="index.html"></ons-navigator>
+        <ons-navigator id="appNavigator" page="lobby.html"></ons-navigator>
     </ons-page>
 </ons-template>
 
 
-
-<template id="index.html">
+<template id="lobby.html">
     <ons-page>
         <ons-toolbar>
             <div class="left">
@@ -83,34 +81,30 @@
                 Lobby
             </div>
         </ons-toolbar>
-        <ons-list>
-            <ons-list-item onclick="showPage('chatroom.html')">
-                kurs 1
-            </ons-list-item>
-            <ons-list-item onclick="showPage('chatroom.html')">
-                kurs 2
-            </ons-list-item>
-            <ons-list-item onclick="showPage('chatroom.html')">
-                kurs 3
-            </ons-list-item>
+        <ons-list id="chat-room-list">
+            <script>
+                fn.addChatRoomToList("DD2525")
+                fn.addChatRoomToList("DD2828")
+                fn.addChatRoomToList("SF1320")
+            </script>
         </ons-list>
     </ons-page>
 </template>
 
 
+<!-- Chatroom template -->
 
-<template id="chatroom.html">
-    <ons-page id="chatroom">
+<ons-template id="chatroom.html">
+    <ons-page>
         <ons-toolbar>
             <div class="left">
                 <ons-back-button>Lobby</ons-back-button>
             </div>
-            <div class="center">
-                #name of chatroom#
+            <div id="chat-room-header" class="center">
             </div>
         </ons-toolbar>
     </ons-page>
-</template>
+</ons-template>
 
 
 <!-- side menu templates -->
