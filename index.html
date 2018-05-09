@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
         <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
         <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+        <script src="app.js"></script>
         <script>
            if (window.hyper) { console.log = hyper.log }
            ons.platform.select('ios')
@@ -52,7 +53,7 @@
             <ons-page id="login.html">
                 <img src="img/kth-logo-1.png">
                 <p>Welcome to KTH chat</p>
-                <ons-button onclick="fn.load('chatRooms.html')">
+                <ons-button onclick="showPage('chatRooms.html')">
                     login
                 </ons-button>
             </ons-page>
@@ -60,54 +61,14 @@
 
         <ons-template id="chatRooms.html">
             <ons-page>
-
                 <ons-list>
                     <ons-list-item>
+                        Hello
                     </ons-list-item>
                 </ons-list>
             </ons-page>
         </ons-template>
 
-        <script>
-        function showPage(page) {
-            // jQuery returns an array of DOM objects, we want the first DOM object
-            // which is the have that has the pushPage function.
-            $('#appNavigator')[0].pushPage(page)
-        }
-
-        showLogIn = function() {
-            var dialog = document.getElementById('login');
-
-            if(dialog) {
-                dialog.show;
-            } else {
-                ons.createElement('login.html', { append: true })
-                    .then(function(dialog) {
-                    dialog.show();
-                });
-            }
-        }
-
-        var hideDialog = function(id) {
-            document.getElementById(id).hide();
-        };
-
-
-
-
-        window.fn = {};
-
-        window.fn.open = function() {
-            var menu = document.getElementById('menu');
-            menu.open();
-        };
-
-        window.fn.load = function(page) {
-            var content = document.getElementById('content');
-            var menu = document.getElementById('menu');
-            content.load(page).then(menu.close.bind(menu));
-    }   ;
-    </script>
 
     </body>
 </html>
