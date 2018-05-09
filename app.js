@@ -4,35 +4,31 @@ function showPage(page) {
     $('#appNavigator')[0].pushPage(page)
 }
 
-function showChatRoom(page, id) {
-    // jQuery returns an array of DOM objects, we want the first DOM object
-    // which is the have that has the pushPage function.
-    $('#appNavigator')[0].pushPage(page)
+
+function showChatRoom(roomId) {
+    // find chatroom template
+    var chatroom = document.getElementById("chatroom.html")
+
+    // make navigator show page
+    $('#appNavigator')[0].pushPage("chatroom.html", {data: { id : roomId }})
+    .then(function() {
+        loadChatRoom()
+    });
 }
 
 
-showLogIn = function() {
-    var dialog = document.getElementById('login');
+function loadChatRoom() {
+    // passed data by pushPage
+    var data = $('#appNavigator')[0].topPage.data
+    // set header to room id
+    $('#chat-room-header')[0].textContent = data.id
 
-    if(dialog) {
-        dialog.show;
-    } else {
-        ons.createElement('login.html', { append: true })
-            .then(function(dialog) {
-            dialog.show();
-        });
-    }
 }
-
-
-var hideDialog = function(id) {
-    document.getElementById(id).hide();
-};
-
-
 
 
 window.fn = {};
+
+
 
 window.fn.open = function() {
     var menu = document.getElementById('sideMenu');
@@ -45,32 +41,22 @@ window.fn.load = function(page) {
     content.load(page).then(menu.close.bind(menu));
 };
 
+
+
 /*
-<ons-page id="chatroom">
-    <ons-toolbar>
-        <div class="left">
-            <ons-back-button>Lobby</ons-back-button>
-        </div>
-        <div class="center">
-            #name of chatroom#
-        </div>
-    </ons-toolbar>
-</ons-page>
+    Adds a list item to lobby list
+
+    format:
+    <ons-list-item class="chat-room-list-item" onclick="loadChatRoom(roomId)">
+        roomId
+    </ons-list-item>
 */
-window.fn.generateChatRoom = function(roomId) {
-    var onsPage = document.createElement("ONS-PAGE")
-    var onsToolbar = document.createElement("ONS-TOOLBAR")
-    var onsToolbarLeft = document.createElement("DIV")
-    var onsToolbarCenter = document.createElement("DIV")
-
-
-    onsPage.setAttribute("id", roomId)
-    onsToolbarLeft.setAttribute("class","left")
-    onsToolbarCenter.setAttribute("class","center")
-    onsToolbarCenter.textContent = roomId
-
-    onsToolbar.appendChild(onsToolbarLeft)
-    onsToolbar.appendChild(onsToolbarCenter)
-    onsPage.appendChild(onsToolbar)
-
+window.fn.addChatRoomToList = function(roomId) {
+    var list = document.getElementById("chat-room-list")
+    var item = document.createElement("ONS-LIST-ITEM")
+    item.setAttribute("class", "chat-room-list-item")
+    item.setAttribute("id", roomId)
+    item.setAttribute("onclick", "showChatRoom(\"" + roomId + "\")")
+    item.textContent = roomId
+    list.appendChild(item)
 }
