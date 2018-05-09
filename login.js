@@ -1,6 +1,11 @@
-/*****************************************
-                FIREBASE STUFF
-*****************************************/
+/*****************************************************************************
+                            Login.js   
+
+ TODO: Skicka med databse till main.html. (window.location på rad 38)
+       När detta är gjorts så kan vi enkelt flytta alla metoder som pratar
+       med databasen till app.js
+
+*****************************************************************************/
 
 var config = {
     apiKey: "AIzaSyDtbCaRrJDi1WywsroMRWbagl9-rWLUlE0",
