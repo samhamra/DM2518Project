@@ -3,7 +3,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src='https://d3js.org/d3.v3.min.js'></script>
         <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
-        
+
         <script>
   // Initialize Firebase
   var config = {
@@ -16,9 +16,62 @@
   };
 firebase.initializeApp(config);
 </script>
-        
-        
+
+<script src="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.js"></script>
+   <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.css" />
+   <script type="text/javascript">
+     // FirebaseUI config.
+     var uiConfig = {
+       //signInSuccessUrl: '<url-to-redirect-to-on-success>',
+       signInOptions: [
+         // Leave the lines as is for the providers you want to offer your users.
+         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+
+       ],
+       // Terms of service url.
+       //tosUrl: '<your-tos-url>'
+     };
+
+     // Initialize the FirebaseUI Widget using Firebase.
+     var ui = new firebaseui.auth.AuthUI(firebase.auth());
+     // The start method will wait until the DOM is loaded.
+     ui.start('#firebaseui-auth-container', uiConfig);
+   </script>
+
+
     </head>
     <body>
+      <div id="firebaseui-auth-container"></div>
+      <form id="post">
+        Name
+        <input label="name" type="text" name="name">
+        <br>
+        Message
+        <input label="message" type="text" name="message">
+        <br>
+        <button onclick="post()">Post please</button>
+      </form>
+
+      <p id="main"></p>
+      <script type="text/javascript">
+      var db = firebase.database();
+      var ref = db.ref("rooms/room1/messages");
+      ref.on("value", function(snapshot) {
+        var string = "";
+        snapshot.forEach(function(element) {
+          string+= "User:" + element.val().name + " Message: " + element.val().message + "<br>";
+        })
+        document.getElementById("main").innerHTML = string;
+      })
+
+
+        function post() {
+          var form = document.getElementById("post");
+          console.log(form.message.value);
+          var newChildRef = ref.push();
+          newChildRef.set({name: form.name.value, message: form.message.value});
+        }
+
+      </script>
     </body>
 </html>
