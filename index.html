@@ -5,108 +5,183 @@
         <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
 
         <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDtbCaRrJDi1WywsroMRWbagl9-rWLUlE0",
-    authDomain: "dm2518-e6d19.firebaseapp.com",
-    databaseURL: "https://dm2518-e6d19.firebaseio.com",
-    projectId: "dm2518-e6d19",
-    storageBucket: "dm2518-e6d19.appspot.com",
-    messagingSenderId: "872642898861"
-  };
-firebase.initializeApp(config);
-var db = firebase.database();
-</script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyDtbCaRrJDi1WywsroMRWbagl9-rWLUlE0",
+                authDomain: "dm2518-e6d19.firebaseapp.com",
+                databaseURL: "https://dm2518-e6d19.firebaseio.com",
+                projectId: "dm2518-e6d19",
+                storageBucket: "dm2518-e6d19.appspot.com",
+                messagingSenderId: "872642898861"
+            };
+            firebase.initializeApp(config);
+            var db = firebase.database();
+        </script>
 
-<script src="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.js"></script>
-   <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.css" />
-   <script type="text/javascript">
-     // FirebaseUI config.
-     var uiConfig = {
-       //signInSuccessUrl: '<url-to-redirect-to-on-success>',
-       signInOptions: [
-         // Leave the lines as is for the providers you want to offer your users.
-         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        <script src="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.css" />
+        <script type="text/javascript">
 
-       ],
-       // Terms of service url.
-       //tosUrl: '<your-tos-url>'
-     };
+        // FirebaseUI config.
+        var uiConfig = {
+        //signInSuccessUrl: '<url-to-redirect-to-on-success>',
+        signInOptions: [
+            // Leave the lines as is for the providers you want to offer your users.
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            ],
+            // Terms of service url.
+            //tosUrl: '<your-tos-url>'
+        };
 
-     // Initialize the FirebaseUI Widget using Firebase.
-     var ui = new firebaseui.auth.AuthUI(firebase.auth());
-     // The start method will wait until the DOM is loaded.
-     ui.start('#firebaseui-auth-container', uiConfig);
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        // The start method will wait until the DOM is loaded.
+        ui.start('#firebaseui-auth-container', uiConfig);
 
-     firebase.auth().onAuthStateChanged(function(user) {
-       if (user) {
-         $("#login").hide();
-         console.log("logged in");
-      } else {
-        console.log("not logged in, wtf?")
-      }
-    });
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                $("#login").hide();
+                console.log("logged in");
+            } else {
+                console.log("not logged in, wtf?")
+            }
+        });
    </script>
 
    //firebase.auth().currentUser
     </head>
     <body>
-      <div id="login">
-        <p> hej allihop välkommen logga in h'r
-          <div id="firebaseui-auth-container"></div>
-      </div>
+        <!-- side menu -->
+        <ons-page>
+            <ons-splitter>
+                <ons-splitter-side id="sideMenu" side="left" width="220px" collapse swipeable>
+                    <ons-page>
+                        <ons-list>
+                            <img src="img/kth-logo-1.png">
 
-      <form id="post">
-        Name
-        <input label="name" type="text" name="name">
-        <br>
-        Message
-        <input label="message" type="text" name="message">
-        <br>
-        <button onclick="post('room1')">Post please</button>
-      </form>
+                            <ons-list-item onclick="fn.load('wrapper.html')" tappable>
+                                Lobby
+                            </ons-list-item>
+                            <ons-list-item onclick="fn.load('profile.html')" tappable>
+                                Profile
+                            </ons-list-item>
+                            <ons-list-item onclick="fn.load('settings.html')" tappable>
+                                Settings
+                            </ons-list-item>
+                            <ons-list-item onclick="fn.load('about.html')" tappable>
+                                About
+                            </ons-list-item>
+                        </ons-list>
+                        <ons-button>
+                            Logout
+                        </ons-button>
+                    </ons-page>
+                </ons-splitter-side>
+                <ons-splitter-content id="content" page="wrapper.html">
+                </ons-splitter-content>
+            </ons-splitter>
+        </ons-page>
 
-      <p id="main"></p>
-
-
-      <script type="text/javascript">
-
-        function post(room) {
-          //get form data
-          var form = document.getElementById("post");
-          var ref = db.ref("rooms/" + room + "/messages");
-          var newChildRef = ref.push();
-          // set form data
-          newChildRef.set({name: firebase.auth().currentUser.displayName, message: form.message.value});
-        }
-
-        // denna funktion ska användas för att populera chattrumlistans
-        function onload() {
-          var ref = db.ref("/");
-          ref.once("value", function(snapshot) {
-            snapshot.forEach(function(element) {
-              Object.keys(element.val()).forEach(function(room) {
-                  console.log(room);
-                  //button onclick'openroom(room)'
-                  // Skapa en knapp för varje rum, med id room
-              })
-            })
-          })
-        }
-
-        // Kalla på denna funktion när ni har renderat ny chattsida, för att visa posts
-        function openRoom(room) {
-          var ref = db.ref("rooms/" + room + "/messages");
-          ref.on("value", function(snapshot) {
-            snapshot.forEach(function(post) {
-              console.log(post.val().name)
-              console.log(post.val().message)
-            // använd hur ni vull
-            })
-          })
-        }
-
-
-      </script>
-
+    </body>
 </html>
+
+<!-- navigator wrapper -->
+<ons-template id="wrapper.html">
+    <ons-page id="wrapper">
+        <ons-navigator id="appNavigator" page="index.html"></ons-navigator>
+    </ons-page>
+</ons-template>
+
+
+
+<template id="index.html">
+    <ons-page>
+        <ons-toolbar>
+            <div class="left">
+                <ons-toolbar-button onclick="fn.open()">
+                    <ons-icon icon="md-menu"></ons-icon>
+                </ons-toolbar-button>
+            </div>
+            <div class="center">
+                Lobby
+            </div>
+        </ons-toolbar>
+        <ons-list>
+            <ons-list-item onclick="showPage('chatroom.html')">
+                kurs 1
+            </ons-list-item>
+            <ons-list-item onclick="showPage('chatroom.html')">
+                kurs 2
+            </ons-list-item>
+            <ons-list-item onclick="showPage('chatroom.html')">
+                kurs 3
+            </ons-list-item>
+        </ons-list>
+    </ons-page>
+</template>
+
+
+
+<template id="chatroom.html">
+    <ons-page id="chatroom">
+        <ons-toolbar>
+            <div class="left">
+                <ons-back-button>Lobby</ons-back-button>
+            </div>
+            <div class="center">
+                #name of chatroom#
+            </div>
+        </ons-toolbar>
+    </ons-page>
+</template>
+
+
+<!-- side menu templates -->
+
+<template id="profile.html">
+  <ons-page>
+      <ons-toolbar>
+       <div class="left">
+         <ons-toolbar-button onclick="fn.open()">
+           <ons-icon icon="md-menu"></ons-icon>
+         </ons-toolbar-button>
+       </div>
+       <div class="center">
+         Profile
+       </div>
+     </ons-toolbar>
+    <p>Profile</p>
+  </ons-page>
+</template>
+
+<template id="settings.html">
+  <ons-page>
+      <ons-toolbar>
+       <div class="left">
+         <ons-toolbar-button onclick="fn.open()">
+           <ons-icon icon="md-menu"></ons-icon>
+         </ons-toolbar-button>
+       </div>
+       <div class="center">
+         Settings
+       </div>
+     </ons-toolbar>
+    <p>Settings</p>
+  </ons-page>
+</template>
+
+<template id="about.html">
+  <ons-page>
+      <ons-toolbar>
+       <div class="left">
+         <ons-toolbar-button onclick="fn.open()">
+           <ons-icon icon="md-menu"></ons-  icon>
+         </ons-toolbar-button>
+       </div>
+       <div class="center">
+         About
+       </div>
+     </ons-toolbar>
+    <p>About</p>
+  </ons-page>
+</template>
