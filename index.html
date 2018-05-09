@@ -28,48 +28,137 @@
 
     </head>
     <body>
+        <!-- side menu -->
+        <ons-page>
+            <ons-splitter>
+                <ons-splitter-side id="sideMenu" side="left" width="220px" collapse swipeable>
+                    <ons-page>
+                        <ons-list>
+                            <img src="img/kth-logo-1.png">
 
-        <!-- loaf facebook sdk for login -->
-        <!--
-        <script>
-
-
-            (function(d, s, id){
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {return;}
-                js = d.createElement(s); js.id = id;
-                js.src = "https://connect.facebook.net/en_US/sdk.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
-    -->
-
-
-        <ons-navigator id="appNavigator" page="login.html"></ons-navigator>
-
-        <!-- Onsen templates -->
-
-        <ons-template id="login.html">
-            <ons-page id="login.html">
-                <img src="img/kth-logo-1.png">
-                <p>Welcome to KTH chat</p>
-                <ons-button onclick="showPage('chatRooms.html')">
-                    login
-                </ons-button>
-            </ons-page>
-        </ons-template>
-
-        <ons-template id="chatRooms.html">
-            <ons-page>
-                <ons-list>
-                    <ons-list-item>
-                        Hej Hej Magda här
-                        igeeeen
-                    </ons-list-item>
-                </ons-list>
-            </ons-page>
-        </ons-template>
-
+                            <ons-list-item onclick="fn.load('wrapper.html')" tappable>
+                                Lobby
+                            </ons-list-item>
+                            <ons-list-item onclick="fn.load('profile.html')" tappable>
+                                Profile
+                            </ons-list-item>
+                            <ons-list-item onclick="fn.load('settings.html')" tappable>
+                                Settings
+                            </ons-list-item>
+                            <ons-list-item onclick="fn.load('about.html')" tappable>
+                                About
+                            </ons-list-item>
+                        </ons-list>
+                        <ons-button>
+                            Logout
+                        </ons-button>
+                    </ons-page>
+                </ons-splitter-side>
+                <ons-splitter-content id="content" page="wrapper.html">
+                </ons-splitter-content>
+            </ons-splitter>
+        </ons-page>
 
     </body>
 </html>
+
+<!-- navigator wrapper -->
+<ons-template id="wrapper.html">
+    <ons-page id="wrapper">
+        <ons-navigator id="appNavigator" page="index.html"></ons-navigator>
+    </ons-page>
+</ons-template>
+
+
+
+<template id="index.html">
+    <ons-page>
+        <ons-toolbar>
+            <div class="left">
+                <ons-toolbar-button onclick="fn.open()">
+                    <ons-icon icon="md-menu"></ons-icon>
+                </ons-toolbar-button>
+            </div>
+            <div class="center">
+                Lobby
+            </div>
+        </ons-toolbar>
+        <ons-list>
+            <ons-list-item onclick="showPage('chatroom.html')">
+                kurs 1
+            </ons-list-item>
+            <ons-list-item onclick="showPage('chatroom.html')">
+                kurs 2
+            </ons-list-item>
+            <ons-list-item onclick="showPage('chatroom.html')">
+                kurs 3
+            </ons-list-item>
+        </ons-list>
+    </ons-page>
+</template>
+
+
+
+<template id="chatroom.html">
+    <ons-page id="chatroom">
+        <ons-toolbar>
+            <div class="left">
+                <ons-back-button>Lobby</ons-back-button>
+            </div>
+            <div class="center">
+                #name of chatroom#
+            </div>
+        </ons-toolbar>
+    </ons-page>
+</template>
+
+
+<!-- side menu templates -->
+
+<template id="profile.html">
+  <ons-page>
+      <ons-toolbar>
+       <div class="left">
+         <ons-toolbar-button onclick="fn.open()">
+           <ons-icon icon="md-menu"></ons-icon>
+         </ons-toolbar-button>
+       </div>
+       <div class="center">
+         Profile
+       </div>
+     </ons-toolbar>
+    <p>Profile</p>
+  </ons-page>
+</template>
+
+<template id="settings.html">
+  <ons-page>
+      <ons-toolbar>
+       <div class="left">
+         <ons-toolbar-button onclick="fn.open()">
+           <ons-icon icon="md-menu"></ons-icon>
+         </ons-toolbar-button>
+       </div>
+       <div class="center">
+         Settings
+       </div>
+     </ons-toolbar>
+    <p>Settings</p>
+  </ons-page>
+</template>
+
+<template id="about.html">
+  <ons-page>
+      <ons-toolbar>
+       <div class="left">
+         <ons-toolbar-button onclick="fn.open()">
+           <ons-icon icon="md-menu"></ons-  icon>
+         </ons-toolbar-button>
+       </div>
+       <div class="center">
+         About
+       </div>
+     </ons-toolbar>
+    <p>About</p>
+  </ons-page>
+</template>
