@@ -1,5 +1,6 @@
-
-import { db } from './app.js';
+import {app} from './app.js'
+var db = app.database();
+console.log("ok");
 
 function post(room) {
     //get form data
@@ -36,7 +37,7 @@ function openRoom(room) {
     })
 }
 
-
+openRoom('room1');
 /*****************************************
                 ONSEN STUFF
     TODO: split to separate file
