@@ -1,5 +1,5 @@
 /*****************************************************************************
-                            Login.js   
+                            Login.js
 
  TODO: Skicka med databse till main.html. (window.location på rad 38)
        När detta är gjorts så kan vi enkelt flytta alla metoder som pratar
@@ -16,7 +16,7 @@ var config = {
     messagingSenderId: "872642898861"
 };
 
-firebase.initializeApp(config);
+export firebase.initializeApp(config);
 var db = firebase.database();
 var uiConfig = {
     //signInSuccessUrl: 'https://people.kth.se/~victorhv/DM2518Project/main.html',
@@ -35,9 +35,6 @@ ui.start('#firebaseui-auth-container', uiConfig);
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-        $("#login").hide();
-        console.log("logged in");
-        // REDIRECT TO MAIN
         window.location = 'main.html'
     } else {
         console.log("not logged in, wtf?")

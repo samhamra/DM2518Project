@@ -8,6 +8,9 @@
           från index.html
 **************************************************************/
 
+import { app } from './login.js';
+var db = app.database();
+
 function post(room) {
     //get form data
     var form = document.getElementById("post");
