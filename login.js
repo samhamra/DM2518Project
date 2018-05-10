@@ -16,7 +16,7 @@ var config = {
     messagingSenderId: "872642898861"
 };
 
-export firebase.initializeApp(config);
+export { firebase.initializeApp(config)}
 var db = firebase.database();
 var uiConfig = {
     //signInSuccessUrl: 'https://people.kth.se/~victorhv/DM2518Project/main.html',
