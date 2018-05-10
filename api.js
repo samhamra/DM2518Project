@@ -1,6 +1,5 @@
 
-import { app } from './app.js';
-var db = app.database();
+import { db } from './app.js';
 
 function post(room) {
     //get form data
