@@ -80,13 +80,36 @@
 <!-- slänger med id vid instansiering -->
 <ons-template id="chatroom.html">
     <ons-page>
-        <ons-toolbar>
+        <ons-toolbar id="chat-header">
             <div class="left">
                 <ons-back-button>Lobby</ons-back-button>
             </div>
             <div id="chat-room-header" class="center">
             </div>
         </ons-toolbar>
+
+        <!-- Messages goes here -->
+        <!-- maybe nice for usage
+        <ons-list>
+            <ons-lazy-repeat id="infinite-list">
+
+            </ons-lazy-repeat>
+        </ons-list>
+        -->
+        <div id="messageBoard">
+        </div>
+
+        <ons-bottom-toolbar>
+            <div class="center">
+                <textarea id="msg-input" class="textarea" rows="3" placeholder="Skriv meddelande" ></textarea>
+                <!-- fix icon http://ionicons.com/
+                    https://onsen.io/v2/api/js/ons-icon.html
+                -->
+                <ons-toolbar-button onclick="firebaseController.post()">
+                    send
+                </ons-toolbar-button>
+            </div>
+        </ons-bottom-toolbar>
     </ons-page>
 </ons-template>
 

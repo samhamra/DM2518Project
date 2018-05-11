@@ -4,19 +4,20 @@
 
 import {app} from './app.js'
 var db = app.database();
-console.log("ok");
 
 
 window.firebaseController = {}
-window.firebaseController.currentRoomList = []
+window.firebaseController.currentRoom = ""
 
-window.firebaseController.post = function(room) {
+window.firebaseController.post = function() {
     //get form data
-    var form = document.getElementById("post");
-    var ref = db.ref("rooms/" + room + "/messages");
+    var textarea = document.getElementById("msg-input");
+    var ref = db.ref("rooms/" + firebaseController.currentRoom + "/messages");
     var newChildRef = ref.push();
     // set form data
-    newChildRef.set({name: firebase.auth().currentUser.displayName, message: form.message.value});
+    newChildRef.set({name: firebase.auth().currentUser.displayName, message: textarea.value});
+
+    textarea.value = ""
 }
 
 // denna funktion ska användas för att populera chattrumlistans
@@ -32,16 +33,24 @@ window.firebaseController.loadChatRoomList = function() {
 }
 
 // Kalla på denna funktion när ni har renderat ny chattsida, för att visa posts
-window.firebaseController.openRoom = function(room) {
+window.firebaseController.initRoom = function(room) {
     var ref = db.ref("rooms/" + room + "/messages");
+    firebaseController.currentRoom = room
+    console.log(firebaseController.currentRoom)
+    var messageBoard = $("#messageBoard")[0];
     ref.on("value", function(snapshot) {
         snapshot.forEach(function(post) {
-            console.log(post.val().name)
-            console.log(post.val().message)
+            //console.log(post.val().name)
+            //console.log(post.val().message)
             // använd hur ni vull
+            UI.renderMessage(messageBoard, post.val().name, post.val().message)
         })
     })
 }
+
+
+
+
 
 
 /*****************************************
@@ -71,13 +80,12 @@ window.UI.load = function(page) {
 window.UI.showChatRoom = function(roomId) {
     // find chatroom template
     var chatroom = document.getElementById("chatroom.html")
-
     // make navigator show page
     $('#appNavigator')[0].pushPage("chatroom.html", {data: { id : roomId }})
     .then(function() {
         // passed data by pushPage
         var data = $('#appNavigator')[0].topPage.data
-        // set header to room id
+        firebaseController.initRoom(data.id);
         $('#chat-room-header')[0].textContent = data.id
     });
 }
@@ -97,4 +105,15 @@ window.UI.addChatRoomToList = function(roomId) {
     item.setAttribute("onclick", "UI.showChatRoom(\"" + roomId + "\")")
     item.textContent = roomId
     list.appendChild(item)
+}
+
+
+window.UI.renderMessage = function(board, name, msg) {
+    var container = document.createElement("DIV")
+    var msgContainer = document.createElement("DIV")
+    msgContainer.textContent = msg
+    container.textContent = name
+    container.setAttribute("id","msg-container")
+    container.appendChild(msgContainer)
+    board.appendChild(container)
 }

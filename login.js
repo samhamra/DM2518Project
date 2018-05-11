@@ -10,11 +10,18 @@ var uiConfig = {
         //tosUrl: '<your-tos-url>'
     };
 
+
+function checkLoginState() {
+
+}
+
+window.onload = checkLoginState()
+
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 // The start method will wait until the DOM is loaded.
 ui.start('#firebaseui-auth-container', uiConfig);
-console.log('vafan');
+
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         window.location = 'main.html'
