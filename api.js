@@ -17,7 +17,7 @@ window.firebaseController.post = function(room) {
     var ref = db.ref("rooms/" + room + "/messages");
     var newChildRef = ref.push();
     // set form data
-    newChildRef.set({name: firebase.auth().currentUser.displayName, message: form.message.value});
+    newChildRef.set({name: firebase.auth().currentUser.displayName, message: form.message.value, type:'text'});
 }
 
 // denna funktion ska användas för att populera chattrumlistans
@@ -44,8 +44,9 @@ window.firebaseController.openRoom = function(room) {
     })
 }
 
-window.firebaseController.uploadPicture = function(event) {
-  var files = event.target.files;
+window.firebaseController.uploadPicture = function(event, room) {
+	console.log(event);
+  var fileList = event.target.files;
   let file = null;
 
       for (let i = 0; i < fileList.length; i++) {
@@ -61,14 +62,21 @@ window.firebaseController.uploadPicture = function(event) {
 
 
         // Create a reference to 'images/mountains.jpg'
-        var ImageRef = storageRef.child('images/' + file.name + '.jpg');
+        var ImageRef = storageRef.child('images/' + file.name);
 
         ImageRef.put(file).then(function(snapshot) {
-          console.log('Uploaded a blob or file!');
-        });
-      }
-    }
 
+	  console.log(snapshot);
+      	  if(snapshot.state == 'success'){
+		console.log(snapshot);
+             // You will get the Url here.
+   	      var ref = db.ref("rooms/" + room + "/messages");
+              var newChildRef = ref.push();
+    	      newChildRef.set({name: firebase.auth().currentUser.displayName, message: snapshot.downloadURL, type:'image'});
+ 	console.log('image successfully uploaded to ' + room);         
+        };
+      });
+    }
 }
 
 
