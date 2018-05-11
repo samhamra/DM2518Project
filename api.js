@@ -4,7 +4,8 @@
 
 import {app} from './app.js'
 var db = app.database();
-console.log("ok");
+var storage = app.storage();
+
 
 
 window.firebaseController = {}
@@ -41,6 +42,33 @@ window.firebaseController.openRoom = function(room) {
             // använd hur ni vull
         })
     })
+}
+
+window.firebaseController.uploadPicture = function(event) {
+  var files = event.target.files;
+  let file = null;
+
+      for (let i = 0; i < fileList.length; i++) {
+        if (fileList[i].type.match(/^image\//)) {
+          file = fileList[i];
+          break;
+        }
+      }
+
+      if (file !== null) {
+        // Create a root reference
+        var storageRef = storage.ref();
+
+
+        // Create a reference to 'images/mountains.jpg'
+        var ImageRef = storageRef.child('images/' + file.name + '.jpg');
+
+        ImageRef.put(file).then(function(snapshot) {
+          console.log('Uploaded a blob or file!');
+        });
+      }
+    }
+
 }
 
 
