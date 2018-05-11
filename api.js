@@ -1,8 +1,16 @@
+/*
+    TODO: pre-load list of rooms at post-login. Before render.
+*/
+
 import {app} from './app.js'
 var db = app.database();
 console.log("ok");
 
-function post(room) {
+
+window.firebaseController = {}
+window.firebaseController.currentRoomList = []
+
+window.firebaseController.post = function(room) {
     //get form data
     var form = document.getElementById("post");
     var ref = db.ref("rooms/" + room + "/messages");
@@ -12,21 +20,19 @@ function post(room) {
 }
 
 // denna funktion ska användas för att populera chattrumlistans
-function loadChatRoomList() {
+window.firebaseController.loadChatRoomList = function() {
     var ref = db.ref("/");
     ref.once("value", function(snapshot) {
         snapshot.forEach(function(element) {
             Object.keys(element.val()).forEach(function(room) {
-                console.log(room);
-                //button onclick'openroom(room)'
-                // Skapa en knapp för varje rum, med id room
+                UI.addChatRoomToList(room)
             })
         })
     })
 }
 
 // Kalla på denna funktion när ni har renderat ny chattsida, för att visa posts
-function openRoom(room) {
+window.firebaseController.openRoom = function(room) {
     var ref = db.ref("rooms/" + room + "/messages");
     ref.on("value", function(snapshot) {
         snapshot.forEach(function(post) {
@@ -37,59 +43,44 @@ function openRoom(room) {
     })
 }
 
-openRoom('room1');
+
 /*****************************************
                 ONSEN STUFF
     TODO: split to separate file
 *****************************************/
-
-function showPage(page) {
+window.UI = {};
+window.UI.showPage = function(page) {
     // jQuery returns an array of DOM objects, we want the first DOM object
     // which is the have that has the pushPage function.
     $('#appNavigator')[0].pushPage(page)
-
-    if(page === 'lobby.html') {
-        console.log("test")
-    }
 }
 
 
-function showChatRoom(roomId) {
-    // find chatroom template
-    var chatroom = document.getElementById("chatroom.html")
-
-    // make navigator show page
-    $('#appNavigator')[0].pushPage("chatroom.html", {data: { id : roomId }})
-    .then(function() {
-        loadChatRoom()
-    });
-}
-
-
-function loadChatRoom() {
-    // passed data by pushPage
-    var data = $('#appNavigator')[0].topPage.data
-    // set header to room id
-    $('#chat-room-header')[0].textContent = data.id
-
-}
-
-window.fn = {};
-
-
-window.fn.open = function() {
+window.UI.open = function() {
     var menu = document.getElementById('sideMenu');
     menu.open();
 };
 
-window.fn.load = function(page) {
+window.UI.load = function(page) {
     var content = document.getElementById('content');
     var menu = document.getElementById('sideMenu');
     content.load(page).then(menu.close.bind(menu));
 };
 
 
+window.UI.showChatRoom = function(roomId) {
+    // find chatroom template
+    var chatroom = document.getElementById("chatroom.html")
 
+    // make navigator show page
+    $('#appNavigator')[0].pushPage("chatroom.html", {data: { id : roomId }})
+    .then(function() {
+        // passed data by pushPage
+        var data = $('#appNavigator')[0].topPage.data
+        // set header to room id
+        $('#chat-room-header')[0].textContent = data.id
+    });
+}
 /*
     Adds a list item to lobby list
 
@@ -98,12 +89,12 @@ window.fn.load = function(page) {
         roomId
     </ons-list-item>
 */
-window.fn.addChatRoomToList = function(roomId) {
+window.UI.addChatRoomToList = function(roomId) {
     var list = document.getElementById("chat-room-list")
     var item = document.createElement("ONS-LIST-ITEM")
     item.setAttribute("class", "chat-room-list-item")
     item.setAttribute("id", roomId)
-    item.setAttribute("onclick", "showChatRoom(\"" + roomId + "\")")
+    item.setAttribute("onclick", "UI.showChatRoom(\"" + roomId + "\")")
     item.textContent = roomId
     list.appendChild(item)
 }

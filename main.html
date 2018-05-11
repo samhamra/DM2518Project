@@ -20,16 +20,16 @@
                     <ons-page>
                         <ons-list>
                             <img src="img/kth-logo-1.png">
-                            <ons-list-item onclick="fn.load('wrapper.html')" tappable>
+                            <ons-list-item onclick="UI.load('wrapper.html')" tappable>
                                 Lobby
                             </ons-list-item>
-                            <ons-list-item onclick="fn.load('profile.html')" tappable>
+                            <ons-list-item onclick="UI.load('profile.html')" tappable>
                                 Profile
                             </ons-list-item>
-                            <ons-list-item onclick="fn.load('settings.html')" tappable>
+                            <ons-list-item onclick="UI.load('settings.html')" tappable>
                                 Settings
                             </ons-list-item>
-                            <ons-list-item onclick="fn.load('about.html')" tappable>
+                            <ons-list-item onclick="UI.load('about.html')" tappable>
                                 About
                             </ons-list-item>
                         </ons-list>
@@ -58,7 +58,7 @@
     <ons-page>
         <ons-toolbar>
             <div class="left">
-                <ons-toolbar-button onclick="fn.open()">
+                <ons-toolbar-button onclick="UI.open()">
                     <ons-icon icon="md-menu"></ons-icon>
                 </ons-toolbar-button>
             </div>
@@ -68,7 +68,7 @@
         </ons-toolbar>
         <ons-list id="chat-room-list">
             <script>
-                console.log(window)
+                firebaseController.loadChatRoomList()
             </script>
         </ons-list>
     </ons-page>
@@ -96,7 +96,7 @@
   <ons-page>
       <ons-toolbar>
        <div class="left">
-         <ons-toolbar-button onclick="fn.open()">
+         <ons-toolbar-button onclick="UI.open()">
            <ons-icon icon="md-menu"></ons-icon>
          </ons-toolbar-button>
        </div>
@@ -112,7 +112,7 @@
   <ons-page>
       <ons-toolbar>
        <div class="left">
-         <ons-toolbar-button onclick="fn.open()">
+         <ons-toolbar-button onclick="UI.open()">
            <ons-icon icon="md-menu"></ons-icon>
          </ons-toolbar-button>
        </div>
@@ -128,7 +128,7 @@
   <ons-page>
       <ons-toolbar>
        <div class="left">
-         <ons-toolbar-button onclick="fn.open()">
+         <ons-toolbar-button onclick="UI.open()">
            <ons-icon icon="md-menu"></ons-  icon>
          </ons-toolbar-button>
        </div>

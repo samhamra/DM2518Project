@@ -1,12 +1,3 @@
-/**************************************************************
-                        App.js
-/**************************************************************
-                        FIREBASE
-
-    TODO: Se till att dessa metoder kan kallas
-          från UI. Behöver ladda över db-objektet
-          från index.html
-**************************************************************/
 
 var config = {
     apiKey: "AIzaSyDtbCaRrJDi1WywsroMRWbagl9-rWLUlE0",
