@@ -4,7 +4,7 @@
 
 import {app} from './app.js'
 var db = app.database();
-
+var storage = app.storage();
 
 window.firebaseController = {}
 window.firebaseController.currentRoom = ""
@@ -15,7 +15,7 @@ window.firebaseController.post = function() {
     var ref = db.ref("rooms/" + firebaseController.currentRoom + "/messages");
     var newChildRef = ref.push();
     // set form data
-    newChildRef.set({timestamp: Firebase.ServerValue.TIMESTAMP, name: firebase.auth().currentUser.displayName, message: textarea.value});
+    newChildRef.set({type: 'text', timestamp: firebase.database.ServerValue.TIMESTAMP, name: firebase.auth().currentUser.displayName, message: textarea.value});
 
     textarea.value = ""
 }
@@ -43,12 +43,25 @@ window.firebaseController.initRoom = function(room) {
             //console.log(post.val().name)
             //console.log(post.val().message)
             // använd hur ni vull
-            UI.renderMessage(messageBoard, post.val().name, post.val().message)
+            if(post.val().type) {
+	      if(post.val().type == 'image') {
+	     	UI.renderPicture(messageBoard, post.val().name, post.val().message);
+	      } else {
+		UI.renderMessage(messageBoard, post.val().name, post.val().message);
+	      }
+	    }
+   
         })
     });
 
-    ref.orderByChild('timestamp').startAt(Date.now()).on('child_added', function(snapshot) {
-      console.log('new record', snapshot);
+    ref.orderByChild('timestamp').startAt(Date.now()).on('child_added', function(post) {
+          if(post.val().type) {
+              if(post.val().type == 'image') {
+                UI.renderPicture(messageBoard, post.val().name, post.val().message);
+              } else {
+                UI.renderMessage(messageBoard, post.val().name, post.val().message);
+              }
+            }
     });
 }
 
@@ -78,8 +91,8 @@ window.firebaseController.uploadPicture = function(event) {
              // You will get the Url here.
    	      var ref = db.ref("rooms/" + firebaseController.currentRoom + "/messages");
               var newChildRef = ref.push();
-    	      newChildRef.set({timestamp: Firebase.ServerValue.TIMESTAMP, name: firebase.auth().currentUser.displayName, message: snapshot.downloadURL, type:'image'});
- 	console.log('image successfully uploaded to ' + room);
+    	      newChildRef.set({type: 'image', timestamp: firebase.database.ServerValue.TIMESTAMP, name: firebase.auth().currentUser.displayName, message: snapshot.downloadURL});
+ 	console.log('image successfully uploaded to ' + firebaseController.currentRoom);
         };
       });
     }
@@ -144,6 +157,17 @@ window.UI.addChatRoomToList = function(roomId) {
     list.appendChild(item)
 }
 
+window.UI.renderPicture = function(board, name, url) {
+  var container = document.createElement("DIV");
+  var pictureContainer = document.createElement("DIV");
+  var picture = document.createElement("IMG");
+  picture.setAttribute("src", url);
+  pictureContainer.appendChild(picture);
+  container.textContent = name;	
+  container.setAttribute("id", "picture-container");
+  container.appendChild(pictureContainer);
+  board.appendChild(container)   
+}
 
 window.UI.renderMessage = function(board, name, msg) {
     var container = document.createElement("DIV")
