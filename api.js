@@ -65,6 +65,15 @@ window.firebaseController.initRoom = function(room) {
     });
 }
 
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
 window.firebaseController.uploadPicture = function(event) {
 	console.log(event);
   var fileList = event.target.files;
@@ -80,10 +89,11 @@ window.firebaseController.uploadPicture = function(event) {
       if (file !== null) {
         // Create a root reference
         var storageRef = storage.ref();
-
+	var extension = file.name.substr(file.name.indexOf('.'));
 
         // Create a reference to 'images/mountains.jpg'
-        var ImageRef = storageRef.child('images/' + file.name);
+        var ImageRef = storageRef.child('images/' + guid() + extension);
+	
 
         ImageRef.put(file).then(function(snapshot) {
 
