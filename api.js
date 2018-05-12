@@ -15,7 +15,7 @@ window.firebaseController.post = function() {
     var ref = db.ref("rooms/" + firebaseController.currentRoom + "/messages");
     var newChildRef = ref.push();
     // set form data
-    newChildRef.set({name: firebase.auth().currentUser.displayName, message: textarea.value});
+    newChildRef.set({timestamp: Firebase.ServerValue.TIMESTAMP, name: firebase.auth().currentUser.displayName, message: textarea.value});
 
     textarea.value = ""
 }
@@ -38,14 +38,51 @@ window.firebaseController.initRoom = function(room) {
     firebaseController.currentRoom = room
     console.log(firebaseController.currentRoom)
     var messageBoard = $("#messageBoard")[0];
-    ref.on("value", function(snapshot) {
+    ref.once("value", function(snapshot) {
         snapshot.forEach(function(post) {
             //console.log(post.val().name)
             //console.log(post.val().message)
             // använd hur ni vull
             UI.renderMessage(messageBoard, post.val().name, post.val().message)
         })
-    })
+    });
+
+    ref.orderByChild('timestamp').startAt(Date.now()).on('child_added', function(snapshot) {
+      console.log('new record', snapshot);
+    });
+}
+
+window.firebaseController.uploadPicture = function(event) {
+	console.log(event);
+  var fileList = event.target.files;
+  let file = null;
+
+      for (let i = 0; i < fileList.length; i++) {
+        if (fileList[i].type.match(/^image\//)) {
+          file = fileList[i];
+          break;
+        }
+      }
+
+      if (file !== null) {
+        // Create a root reference
+        var storageRef = storage.ref();
+
+
+        // Create a reference to 'images/mountains.jpg'
+        var ImageRef = storageRef.child('images/' + file.name);
+
+        ImageRef.put(file).then(function(snapshot) {
+
+      	  if(snapshot.state == 'success'){
+             // You will get the Url here.
+   	      var ref = db.ref("rooms/" + firebaseController.currentRoom + "/messages");
+              var newChildRef = ref.push();
+    	      newChildRef.set({timestamp: Firebase.ServerValue.TIMESTAMP, name: firebase.auth().currentUser.displayName, message: snapshot.downloadURL, type:'image'});
+ 	console.log('image successfully uploaded to ' + room);
+        };
+      });
+    }
 }
 
 
