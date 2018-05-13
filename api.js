@@ -104,7 +104,14 @@ window.firebaseController.uploadPicture = function(event) {
 }
 
 
-
+window.firebaseController.logout = function() {
+    firebase.auth().signOut().then(function() {
+        // https://firebase.google.com/docs/auth/web/password-auth#next_steps
+        window.location = "index.html"
+    }, function(error) {
+        // An error happened.
+    });
+}
 
 
 

@@ -1,11 +1,7 @@
-<!--
-    TODO: Byt ut detta till onsen. Detta kan göras enkelt om vi
-          gör en redirect från inloggningssidan till main.html
--->
-
 
 <html>
     <head>
+        <meta charset="UTF-8">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src='https://d3js.org/d3.v3.min.js'></script>
         <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
@@ -18,11 +14,69 @@
         <script type="module" src="login.js"></script>
     </head>
     <body>
-        <ons-page>
-            <img id="login-logo" src="img/kth-logo-1.png">
-            <p> Hej logga in tack </p>
-              <div id="firebaseui-auth-container"></div>
+        <ons-navigator id="loginNavigator" page="welcome.html"></ons-navigator>
+
+        <ons-modal id="modal" direction="up">
+            <div style="text-align: center">
+                <p>
+                    <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Vänta...
+                </p>
             </div>
-        </ons-page>
-      <div id="login">
+        </ons-modal>
+    </body>
 </html>
+
+
+<ons-template id="welcome.html">
+    <ons-page>
+        <img id="login-logo" src="img/kth-logo-1.png">
+        <p> Välkommen till KTHChat! </p>
+            <!-- old login div
+            <div id="firebaseui-auth-container"></div>
+            -->
+        <div id="login-form">
+            <div><input id="user-login" type="text" class="text-input text-input--underbar" placeholder="@kth.se" value=""></div>
+            <div><input id="pwd-login" type="password" class="text-input text-input--underbar" placeholder="Lösenord" value=""></div>
+            <ons-button onclick="LOGIN.goLogin();">
+                Logga in
+            </ons-button>
+            <ons-button onclick="LOGIN.showPage('login.html');">
+                inget konto?
+            </ons-button>
+        </div>
+    </ons-page>
+</ons-template>
+
+<ons-template id="login.html">
+    <ons-page>
+        <img id="login-logo" src="img/kth-logo-1.png">
+        <div id="register-form">
+            <p>
+                Hej! För att du ska kunna komma åt KTHCHat, så måste du ha en aktiv KTH-mail.
+                Ange din mail här och aktivera ditt konto via aktiveringsmailet som du får inom kort!
+            </p>
+            <div id="error-register"></div>
+            <div><input id="user-register" type="text" class="text-input text-input--underbar" placeholder="Användarnamn" value=""></div>
+            <div><input id="mail-register" type="text" class="text-input text-input--underbar" placeholder="@kth.se" value=""></div>
+            <div><input id="pwd-register" type="password" class="text-input text-input--underbar" placeholder="Lösenord" value=""></div>
+            <div><input id="pwd-check-register" type="password" class="text-input text-input--underbar" placeholder="Lösenord igen" value=""></div>
+            <ons-button onclick="LOGIN.register()">
+                Registrera
+            </ons-button>
+        </div>
+    </ons-page>
+</ons-template>
+
+
+<template id="dialog.html">
+  <ons-dialog id="verify-dialog">
+    <div style="text-align: center; padding: 10px;">
+      <p id="dialog-text">
+      </p>
+
+      <p>
+        <ons-button onclick="LOGIN.hideDialog('verify-dialog')">Stäng</ons-button>
+      </p>
+    </div>
+  </ons-dialog>
+</template>
