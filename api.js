@@ -16,7 +16,6 @@ window.firebaseController.post = function() {
     var newChildRef = ref.push();
     // set form data
     newChildRef.set({type: 'text', timestamp: firebase.database.ServerValue.TIMESTAMP, name: firebase.auth().currentUser.displayName, message: textarea.value});
-
     textarea.value = ""
 }
 
@@ -44,13 +43,12 @@ window.firebaseController.initRoom = function(room) {
             //console.log(post.val().message)
             // använd hur ni vull
             if(post.val().type) {
-	      if(post.val().type == 'image') {
-	     	UI.renderPicture(messageBoard, post.val().name, post.val().message);
-	      } else {
-		UI.renderMessage(messageBoard, post.val().name, post.val().message);
-	      }
-	    }
-   
+                if(post.val().type == 'image') {
+                    UI.renderPicture(messageBoard, post.val().name, post.val().message);
+                } else {
+                    UI.renderMessage(messageBoard, post.val().name, post.val().message);
+                }
+            }
         })
     });
 
@@ -66,45 +64,42 @@ window.firebaseController.initRoom = function(room) {
 }
 
 function guid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
 window.firebaseController.uploadPicture = function(event) {
-	console.log(event);
-  var fileList = event.target.files;
-  let file = null;
-
-      for (let i = 0; i < fileList.length; i++) {
+    console.log(event);
+    var fileList = event.target.files;
+    let file = null;
+    for (let i = 0; i < fileList.length; i++) {
         if (fileList[i].type.match(/^image\//)) {
-          file = fileList[i];
-          break;
+            file = fileList[i];
+            break;
         }
-      }
+    }
 
-      if (file !== null) {
+    if (file !== null) {
         // Create a root reference
         var storageRef = storage.ref();
-	var extension = file.name.substr(file.name.indexOf('.'));
+        var extension = file.name.substr(file.name.indexOf('.'));
 
         // Create a reference to 'images/mountains.jpg'
         var ImageRef = storageRef.child('images/' + guid() + extension);
-	
 
         ImageRef.put(file).then(function(snapshot) {
-
-      	  if(snapshot.state == 'success'){
-             // You will get the Url here.
-   	      var ref = db.ref("rooms/" + firebaseController.currentRoom + "/messages");
-              var newChildRef = ref.push();
-    	      newChildRef.set({type: 'image', timestamp: firebase.database.ServerValue.TIMESTAMP, name: firebase.auth().currentUser.displayName, message: snapshot.downloadURL});
- 	console.log('image successfully uploaded to ' + firebaseController.currentRoom);
-        };
-      });
+            if(snapshot.state == 'success') {
+                // You will get the Url here.
+   	            var ref = db.ref("rooms/" + firebaseController.currentRoom + "/messages");
+                var newChildRef = ref.push();
+    	        newChildRef.set({type: 'image', timestamp: firebase.database.ServerValue.TIMESTAMP, name: firebase.auth().currentUser.displayName, message: snapshot.downloadURL});
+                console.log('image successfully uploaded to ' + firebaseController.currentRoom);
+            };
+        });
     }
 }
 
@@ -173,10 +168,10 @@ window.UI.renderPicture = function(board, name, url) {
   var picture = document.createElement("IMG");
   picture.setAttribute("src", url);
   pictureContainer.appendChild(picture);
-  container.textContent = name;	
+  container.textContent = name;
   container.setAttribute("id", "picture-container");
   container.appendChild(pictureContainer);
-  board.appendChild(container)   
+  board.appendChild(container)
 }
 
 window.UI.renderMessage = function(board, name, msg) {
