@@ -72,10 +72,17 @@ window.LOGIN.showPage = function(page) {
 window.LOGIN.goLogin = function () {
     var email = $('#user-login')[0].value
     var password = $('#pwd-login')[0].value
+    console.log(email)
+    console.log(password)
     console.log("GO LOGIN!")
     //https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signInWithEmailAndPassword
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(function (loggedUser) {
+        window.location = 'main.html'
+    })
+    .catch(function(error) {
         // Handle Errors here.
+        console.log(error)
         var errorCode = error.code;
         var errorMessage = error.message;
         /*
@@ -164,7 +171,7 @@ window.LOGIN.verify = function(newUser) {
     newUser.sendEmailVerification().then(function() {
         console.log("Email sent!")
         // Redirect back to login screen
-        LOGIN.showPage('welcome.html');
+        $('#loginNavigator')[0].popPage();
         LOGIN.showDialog("Vi har skickat ett aktiverings mail till dig!");
     }).catch(function(error) {
         console.log("No email sent")
