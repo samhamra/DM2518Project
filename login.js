@@ -27,8 +27,6 @@ firebase.auth().onAuthStateChanged(function(user) {
             });
             */
             window.location = 'main.html'
-        } else {
-            console.log("verify email!")
         }
     } else {
         console.log("logged out...")
@@ -38,7 +36,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 window.LOGIN = {}
 window.LOGIN.loadingScreen = $('#modal');
 
-window.LOGIN.validateMail = function(mail) {
+window.LOGIN.isKTHMail = function(mail) {
     if (mailRegex.test(mail)) {
         return true;
     }
@@ -46,7 +44,7 @@ window.LOGIN.validateMail = function(mail) {
 }
 
 window.LOGIN.showDialog = function(msg) {
-    var dialog = $('#verify-dialog')[0];
+    var dialog = $('#dialog')[0];
     if (dialog) {
         dialog.show();
         var text = $("#dialog-text")[0];
@@ -54,12 +52,27 @@ window.LOGIN.showDialog = function(msg) {
     } else {
         ons.createElement('dialog.html', { append: true })
         .then(function(dialog) {
-            dialog.show();
             var text = $("#dialog-text")[0];
             text.textContent = msg
+            dialog.show();
         });
     }
 };
+
+window.LOGIN.showReVerifyDialog = function(user) {
+    var dialog = $('#verify-dialog')[0];
+    if (dialog) {
+        var resend = $('#resend-verification')[0].onclick = LOGIN.verify(user)
+        dialog.show();
+    } else {
+        ons.createElement('verify-dialog.html', { append: true })
+        .then(function(dialog) {
+            var resend = $('#resend-verification')[0].onclick = LOGIN.verify(user)
+            dialog.show();
+        });
+    }
+};
+
 
 window.LOGIN.hideDialog = function(id) {
     document.getElementById(id).hide();
@@ -72,13 +85,24 @@ window.LOGIN.showPage = function(page) {
 window.LOGIN.goLogin = function () {
     var email = $('#user-login')[0].value
     var password = $('#pwd-login')[0].value
-    console.log(email)
-    console.log(password)
-    console.log("GO LOGIN!")
     //https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signInWithEmailAndPassword
+
+
     firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(function (loggedUser) {
-        window.location = 'main.html'
+    .then(function (user) {
+        if(!user.emailVerified) {
+            // Notify user that email verification is missing
+            LOGIN.showReVerifyDialog(user)
+            // force logout user
+            firebase.auth().signOut().then(function() {
+                // https://firebase.google.com/docs/auth/web/password-auth#next_steps
+                console.log("force logout")
+            }, function(error) {
+                console.log("force logout failed")
+            });
+        } else {
+            console.log("A-OK!")
+        }
     })
     .catch(function(error) {
         // Handle Errors here.
@@ -111,7 +135,7 @@ window.LOGIN.register = function() {
     var errorPrintDiv = $('#error-register')[0]
 
     // check validation of mail
-    if (LOGIN.validateMail(email) && password === passCheck) {
+    if (LOGIN.isKTHMail(email) && password === passCheck) {
         var user = firebase.auth().currentUser;
         if(user === null) {
             https://firebase.google.com/docs/reference/js/firebase.auth.Auth#createUserWithEmailAndPassword
@@ -136,6 +160,8 @@ window.LOGIN.register = function() {
                     console.log("force logout failed")
                 });
                 LOGIN.verify(newUser)
+                $('#loginNavigator')[0].popPage();
+                LOGIN.showDialog("Vi har skickat ett aktiverings mail till dig!");
             }).catch(function(error) {
                 var errorCode = error.code;
                 var errorMessage = error.message;
@@ -165,14 +191,11 @@ window.LOGIN.register = function() {
     }
 }
 
-
 window.LOGIN.verify = function(newUser) {
     //https://firebase.google.com/docs/reference/js/firebase.User#sendEmailVerification
     newUser.sendEmailVerification().then(function() {
         console.log("Email sent!")
         // Redirect back to login screen
-        $('#loginNavigator')[0].popPage();
-        LOGIN.showDialog("Vi har skickat ett aktiverings mail till dig!");
     }).catch(function(error) {
         console.log("No email sent")
         console.log(error)
