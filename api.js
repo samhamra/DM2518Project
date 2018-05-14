@@ -9,6 +9,24 @@ var storage = app.storage();
 window.firebaseController = {}
 window.firebaseController.currentRoom = ""
 
+/* Firebase observer */
+// https://firebase.google.com/docs/reference/js/firebase.auth.Auth#onAuthStateChanged
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        console.log("logged in")
+        if (user.emailVerified) {
+            //
+        } else {
+            // Force to login page if email is not verified
+            window.location = 'index.html'
+        }
+    } else {
+        console.log("logged out")
+        window.location = 'index.html'
+    }
+});
+
+
 window.firebaseController.post = function() {
     //get form data
     var textarea = document.getElementById("msg-input");
@@ -107,7 +125,7 @@ window.firebaseController.uploadPicture = function(event) {
 window.firebaseController.logout = function() {
     firebase.auth().signOut().then(function() {
         // https://firebase.google.com/docs/auth/web/password-auth#next_steps
-        window.location = "index.html"
+        //window.location = "index.html"
     }, function(error) {
         // An error happened.
     });
