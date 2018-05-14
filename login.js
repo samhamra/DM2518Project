@@ -96,6 +96,7 @@ window.LOGIN.goLogin = function () {
 }
 
 window.LOGIN.register = function() {
+    // TODO: https://stackoverflow.com/questions/32151178/how-do-you-include-a-username-when-storing-email-and-password-using-firebase-ba
     var username = $('#user-register')[0].value
     var email = $('#mail-register')[0].value
     var password = $('#pwd-register')[0].value
@@ -110,6 +111,13 @@ window.LOGIN.register = function() {
             firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(function (newUser) {
                 console.log("successfully created new user")
+                // force logout as firebase runs login proceedure on user creation
+                firebase.auth().signOut().then(function() {
+                    // https://firebase.google.com/docs/auth/web/password-auth#next_steps
+                    console.log("force logout")
+                }, function(error) {
+                    console.log("force logout failed")
+                });
                 LOGIN.verify(newUser)
             }).catch(function(error) {
                 var errorCode = error.code;
