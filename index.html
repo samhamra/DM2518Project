@@ -12,6 +12,7 @@
         <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
         <script type="module" src="app.js"></script>
         <script type="module" src="login.js"></script>
+        <link rel="stylesheet" href="main.css">
     </head>
     <body>
         <ons-navigator id="loginNavigator" page="welcome.html"></ons-navigator>
@@ -29,18 +30,18 @@
 
 <ons-template id="welcome.html">
     <ons-page>
-        <img id="login-logo" src="img/kth-logo-1.png">
-        <p> Välkommen till KTHChat! </p>
+        <img id="logokth" src="img/kth-logo-1.png">
+        <h1> Välkommen till KTHChat! </h1>
             <!-- old login div
             <div id="firebaseui-auth-container"></div>
             -->
         <div id="login-form">
             <div><input id="user-login" type="text" class="text-input text-input--underbar" placeholder="@kth.se" value=""></div>
             <div><input id="pwd-login" type="password" class="text-input text-input--underbar" placeholder="Lösenord" value=""></div>
-            <ons-button onclick="LOGIN.goLogin();">
+            <ons-button id="loginbutton" onclick="LOGIN.goLogin();">
                 Logga in
             </ons-button>
-            <ons-button onclick="LOGIN.showPage('login.html');">
+            <ons-button id="ingetkontobutton" onclick="LOGIN.showPage('login.html');">
                 inget konto?
             </ons-button>
         </div>

@@ -10,6 +10,7 @@
         <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.css"/>
         <script type="module" src="app.js"></script>
         <script type="module" src="api.js"></script>
+        <link rel="stylesheet" href="main.css">
 
     </head>
     <body>
@@ -19,23 +20,29 @@
                 <ons-splitter-side id="sideMenu" side="left" width="220px" collapse swipeable>
                     <ons-page>
                         <ons-list>
-                            <img src="img/kth-logo-1.png">
+                            <img id="logokth" src="img/kth-logo-1.png">
                             <ons-list-item onclick="UI.load('wrapper.html')" tappable>
+                                 <ons-icon icon="md-home"></ons-icon>
                                 Lobby
                             </ons-list-item>
                             <ons-list-item onclick="UI.load('profile.html')" tappable>
+                                <ons-icon icon="md-face"></ons-icon>
                                 Profile
                             </ons-list-item>
                             <ons-list-item onclick="UI.load('settings.html')" tappable>
+                                <ons-icon icon="fa-cog"></ons-icon>
                                 Settings
                             </ons-list-item>
                             <ons-list-item onclick="UI.load('about.html')" tappable>
+                                <ons-icon icon="md-info"></ons-icon>
                                 About
                             </ons-list-item>
+                        
+                        <ons-list-item id="logout" onclick="firebaseController.logout()">
+                            <ons-icon icon="fa-sign-out"></ons-icon> 
+                            Log out
+                        </ons-list-item>
                         </ons-list>
-                        <ons-button onclick="firebaseController.logout()">
-                            Logga ut
-                        </ons-button>
                     </ons-page>
                 </ons-splitter-side>
                 <ons-splitter-content id="content" page="wrapper.html">
@@ -161,6 +168,9 @@
          About
        </div>
      </ons-toolbar>
-    <p>About</p>
+    <p>The KTH chat enables students to connect and exchange experience about courses.<br><br>
+        
+        KTH chat is a project in MD2518 course.
+    </p>
   </ons-page>
 </template>
