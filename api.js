@@ -178,13 +178,11 @@ window.UI.showChatRoom = function(roomId) {
     </ons-list-item>
 */
 window.UI.addChatRoomToList = function(roomId) {
-    var list = document.getElementById("chat-room-list")
-    var item = document.createElement("ONS-LIST-ITEM")
-    item.setAttribute("class", "chat-room-list-item")
-    item.setAttribute("id", roomId)
-    item.setAttribute("onclick", "UI.showChatRoom(\"" + roomId + "\")")
-    item.textContent = roomId
-    list.appendChild(item)
+ var message ="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    var list = $("#chat-room-list")
+    var card = '<div id="'+roomId+'", style="", onclick = UI.showChatRoom(\"' + roomId + '\")><div class="card"><h2 class="card__title">' + roomId + '</h2><div class="card__content">'+ message +'</div></div></div>'
+
+    list.append(card)
 }
 
 window.UI.renderPicture = function(board, name, url) {
