@@ -1,16 +1,16 @@
 {
-rooms: {
-      room1:{
-        messages: []
+"rooms": {
+      "room1":{
+        "messages": []
       },
-      room2: {
-        messages: []
+      "room2": {
+        "messages": []
       },
-      room3: {
-        messages: []
+      "room3": {
+        "messages": []
       }
     },
-    users: {
+    "users": {
 
     }
  }
