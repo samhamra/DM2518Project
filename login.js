@@ -112,6 +112,16 @@ window.LOGIN.register = function() {
             .then(function (newUser) {
                 console.log("successfully created new user")
                 // force logout as firebase runs login proceedure on user creation
+                // Update displayName
+                newUser.updateProfile({
+                    'displayName': username
+                }).then(function() {
+                    console.log("Added displayName")
+                    // Update successful.
+                }, function(error) {
+                    // An error happened.
+                    console.log("DisplayName error on update")
+                });
                 firebase.auth().signOut().then(function() {
                     // https://firebase.google.com/docs/auth/web/password-auth#next_steps
                     console.log("force logout")
