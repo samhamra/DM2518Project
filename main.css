@@ -48,3 +48,19 @@ h1 {
 ons-icon {
     margin-right: 15px;
 }
+
+#file {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+img {
+    max-width: 50%;
+    max-height: 50%;
+}
+
+
