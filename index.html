@@ -9,6 +9,7 @@
         <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.css"/>
         <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
         <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+        <link rel="stylesheet" href="style.css">
         <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
         <script type="module" src="app.js"></script>
         <script type="module" src="login.js"></script>
@@ -49,6 +50,11 @@
 
 <ons-template id="login.html">
     <ons-page>
+        <ons-toolbar id="chat-header">
+            <div class="left">
+                <ons-back-button>Back</ons-back-button>
+            </div>
+        </ons-toolbar>
         <img id="login-logo" src="img/kth-logo-1.png">
         <div id="register-form">
             <p>

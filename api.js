@@ -198,11 +198,29 @@ window.UI.renderPicture = function(board, name, url) {
 }
 
 window.UI.renderMessage = function(board, name, msg) {
-    var container = document.createElement("DIV")
+    var container = $(board).append(
+        $('<div>').attr('class', function() {return name == firebase.auth().currentUser.displayName ? 'msg-container msg-own' : 'msg-container'})
+            .append($('<div>').attr('class', 'msg-userid').text(name))
+            .append($('<div>').attr('class', 'msg-content').text(msg))
+    );
+    
+    /*var container = document.createElement("DIV")
     var msgContainer = document.createElement("DIV")
     msgContainer.textContent = msg
     container.textContent = name
     container.setAttribute("id","msg-container")
     container.appendChild(msgContainer)
-    board.appendChild(container)
+    board.appendChild(container)*/
+}
+
+window.UI.checkPost = function(event) {
+    // if press 'enter'
+    if(event.keyCode == 13) firebaseController.post();
+}
+
+window.UI.renderProfile = function() {
+    $(".profile__img").attr("src", "https://kth.instructure.com/images/messages/avatar-50.png").attr("width", "40%")
+    $(".profile__name").text(firebase.auth().currentUser.displayName);
+    $(".profile__email").text(firebase.auth().currentUser.email); 
+    $(".profile__content").text("Profile content");
 }

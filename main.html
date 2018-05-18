@@ -8,6 +8,7 @@
         <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
         <script src="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.js"></script>
         <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.css"/>
+         <link rel="stylesheet" href="style.css">
         <script type="module" src="app.js"></script>
         <script type="module" src="api.js"></script>
 
@@ -101,7 +102,7 @@
 
         <ons-bottom-toolbar>
             <div class="center">
-                <textarea id="msg-input" class="textarea" rows="3" placeholder="Skriv meddelande" ></textarea>
+                <textarea id="msg-input" class="textarea" rows="3" placeholder="Skriv meddelande" onkeyup="UI.checkPost(event)"></textarea>
                 <!-- fix icon http://ionicons.com/
                     https://onsen.io/v2/api/js/ons-icon.html
                 -->
@@ -129,7 +130,17 @@
          Profile
        </div>
      </ons-toolbar>
-    <p>Profile</p>
+      <div class="center">
+          <script>
+                UI.renderProfile()
+          </script>
+          <img class="profile__img"></img>
+          <div class="profile__userInfo">
+              <div class="profile__name"></div>
+              <div class="profile__email"></div>
+          </div>
+          <div class="profile__content"></div>
+      </div>
   </ons-page>
 </template>
 
