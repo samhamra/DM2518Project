@@ -1,5 +1,8 @@
 <html>
      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src='https://d3js.org/d3.v3.min.js'></script>
         <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
@@ -11,6 +14,7 @@
          <link rel="stylesheet" href="style.css">
         <script type="module" src="app.js"></script>
         <script type="module" src="api.js"></script>
+        <link rel="stylesheet" href="main.css">
 
     </head>
     <body>
@@ -20,23 +24,29 @@
                 <ons-splitter-side id="sideMenu" side="left" width="220px" collapse swipeable>
                     <ons-page>
                         <ons-list>
-                            <img src="img/kth-logo-1.png">
+                            <img id="logokth" src="img/kth-logo-1.png">
                             <ons-list-item onclick="UI.load('wrapper.html')" tappable>
+                                 <ons-icon icon="md-home"></ons-icon>
                                 Lobby
                             </ons-list-item>
                             <ons-list-item onclick="UI.load('profile.html')" tappable>
+                                <ons-icon icon="md-face"></ons-icon>
                                 Profile
                             </ons-list-item>
                             <ons-list-item onclick="UI.load('settings.html')" tappable>
+                                <ons-icon icon="fa-cog"></ons-icon>
                                 Settings
                             </ons-list-item>
                             <ons-list-item onclick="UI.load('about.html')" tappable>
+                                <ons-icon icon="md-info"></ons-icon>
                                 About
                             </ons-list-item>
+
+                        <ons-list-item id="logout" onclick="firebaseController.logout()">
+                            <ons-icon icon="fa-sign-out"></ons-icon>
+                            Log out
+                        </ons-list-item>
                         </ons-list>
-                        <ons-button onclick="firebaseController.logout()">
-                            Logga ut
-                        </ons-button>
                     </ons-page>
                 </ons-splitter-side>
                 <ons-splitter-content id="content" page="wrapper.html">
@@ -102,6 +112,7 @@
 
         <ons-bottom-toolbar>
             <div class="center">
+<<<<<<< HEAD
                 <textarea id="msg-input" class="textarea" rows="3" placeholder="Skriv meddelande" onkeyup="UI.checkPost(event)"></textarea>
                 <!-- fix icon http://ionicons.com/
                     https://onsen.io/v2/api/js/ons-icon.html
@@ -109,8 +120,17 @@
                 <ons-toolbar-button onclick="firebaseController.post()">
                     send
                 </ons-toolbar-button>
+=======
+                <textarea id="msg-input" class="textarea" rows="3" cols ="35" placeholder="Type here..." ></textarea>
+>>>>>>> origin/master
 
-                <ons-input onchange="firebaseController.uploadPicture(event)" type="file" accept="image/*">
+                <input onchange="firebaseController.uploadPicture(event)" type="file" id="file" accept="image/*">
+                <label for="file">
+                    <ons-icon icon="md-image" size="30px" style="color:#1954a6;"></ons-icon>
+                </label>
+                
+                <ons-icon icon="md-mail-send" size ="40px" style="color:#1954a6;" onclick="firebaseController.post()">
+                </ons-icon>
             </div>
         </ons-bottom-toolbar>
     </ons-page>
@@ -172,6 +192,9 @@
          About
        </div>
      </ons-toolbar>
-    <p>About</p>
+    <p>The KTH chat enables students to connect and exchange experience about courses.<br><br>
+
+        KTH chat is a project in MD2518 course.
+    </p>
   </ons-page>
 </template>
