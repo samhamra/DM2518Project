@@ -112,17 +112,8 @@
 
         <ons-bottom-toolbar>
             <div class="center">
-<<<<<<< HEAD
-                <textarea id="msg-input" class="textarea" rows="3" placeholder="Skriv meddelande" onkeyup="UI.checkPost(event)"></textarea>
-                <!-- fix icon http://ionicons.com/
-                    https://onsen.io/v2/api/js/ons-icon.html
-                -->
-                <ons-toolbar-button onclick="firebaseController.post()">
-                    send
-                </ons-toolbar-button>
-=======
-                <textarea id="msg-input" class="textarea" rows="3" cols ="35" placeholder="Type here..." ></textarea>
->>>>>>> origin/master
+
+                <textarea id="msg-input" class="textarea" rows="3" cols ="35" placeholder="Type here..." onkeyup="UI.checkPost(event)"></textarea>
 
                 <input onchange="firebaseController.uploadPicture(event)" type="file" id="file" accept="image/*">
                 <label for="file">
