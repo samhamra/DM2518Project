@@ -169,7 +169,7 @@ window.UI.showChatRoom = function(roomId) {
         // initroom(data, callback), used with async func
         firebaseController.initRoom(data.id, function() {
             // autoscroll function
-            $('.page__content').animate({scrollTop : $('.page__content').height()+500}, 1000);
+            $('.page__content').animate({scrollTop : $('.page__content').height()+9999}, 1000);
         });
         $('#chat-room-header')[0].textContent = data.id
     });
