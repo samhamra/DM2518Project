@@ -190,13 +190,20 @@ window.UI.addChatRoomToList = function(roomId) {
     list.append(card)
 }
 
+
+window.UI.imagePopup = function(url){
+    $("#modal__content").attr("src", url);
+    $("#imageModal").show();
+}
+  
+
 window.UI.renderPicture = function(board, name, url) {
     
   var container = $(board).append(
         $('<div>').attr('class', function() {return name == firebase.auth().currentUser.displayName ? 'msg-container msg-own' : 'msg-container'})
             .append($('<div>').attr('class', 'msg-userid').text(name))
-            .append($('<img>').attr('class', 'picture-container').attr("src", url))
-    );
+            .append($('<img>').attr('class', 'picture-container').attr("src", url).attr('onClick','UI.imagePopup("'+url+'")')));
+
     
   /*var container = document.createElement("DIV");
   var pictureContainer = document.createElement("DIV");
@@ -235,4 +242,8 @@ window.UI.renderProfile = function() {
     $(".profile__name").text(firebase.auth().currentUser.displayName);
     $(".profile__email").text(firebase.auth().currentUser.email); 
     $(".profile__content").text("Profile content");
+}
+  
+window.UI.closeModal = function(){
+    $("#imageModal").hide();
 }
