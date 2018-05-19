@@ -191,7 +191,14 @@ window.UI.addChatRoomToList = function(roomId) {
 }
 
 window.UI.renderPicture = function(board, name, url) {
-  var container = document.createElement("DIV");
+    
+  var container = $(board).append(
+        $('<div>').attr('class', function() {return name == firebase.auth().currentUser.displayName ? 'msg-container msg-own' : 'msg-container'})
+            .append($('<div>').attr('class', 'msg-userid').text(name))
+            .append($('<img>').attr('class', 'picture-container').attr("src", url))
+    );
+    
+  /*var container = document.createElement("DIV");
   var pictureContainer = document.createElement("DIV");
   var picture = document.createElement("IMG");
   picture.setAttribute("src", url);
@@ -199,7 +206,7 @@ window.UI.renderPicture = function(board, name, url) {
   container.textContent = name;
   container.setAttribute("id", "picture-container");
   container.appendChild(pictureContainer);
-  board.appendChild(container)
+  board.appendChild(container)*/
 }
 
 window.UI.renderMessage = function(board, name, msg) {
