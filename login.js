@@ -59,20 +59,6 @@ window.LOGIN.showDialog = function(msg) {
     }
 };
 
-window.LOGIN.showReVerifyDialog = function(user) {
-    var dialog = $('#verify-dialog')[0];
-    if (dialog) {
-        var resend = $('#resend-verification')[0].onclick = LOGIN.verify(user)
-        dialog.show();
-    } else {
-        ons.createElement('verify-dialog.html', { append: true })
-        .then(function(dialog) {
-            var resend = $('#resend-verification')[0].onclick = LOGIN.verify(user)
-            dialog.show();
-        });
-    }
-};
-
 
 window.LOGIN.hideDialog = function(id) {
     document.getElementById(id).hide();
@@ -103,7 +89,8 @@ window.LOGIN.goLogin = function () {
         .then(function (user) {
             if(!user.emailVerified) {
                 // Notify user that email verification is missing
-                LOGIN.showReVerifyDialog(user)
+                // TODO: re-validate
+                LOGIN.showDialog("Du har inte aktiverat ditt konto")
                 // force logout user
                 firebase.auth().signOut().then(function() {
                     // https://firebase.google.com/docs/auth/web/password-auth#next_steps
@@ -111,6 +98,7 @@ window.LOGIN.goLogin = function () {
                 }, function(error) {
                     console.log("force logout failed")
                 });
+                return
             } else {
                 console.log("A-OK!")
             }
@@ -118,16 +106,16 @@ window.LOGIN.goLogin = function () {
         .catch(function(error) {
             switch (error.code) {
                 case 'auth/invalid-email':
-                    LOGIN.showDialog("Ogiltlig mailadress.");
+                    LOGIN.showDialog("Ogiltlig mailadress");
                     break;
                 case 'auth/user-disabled':
-                    LOGIN.showDialog("Användaren är avstängd.");
+                    LOGIN.showDialog("Användaren är avstängd");
                     break;
                 case 'auth/user-not-found':
-                    LOGIN.showDialog("Mailadressen finns inte registrerad.");
+                    LOGIN.showDialog("Mailadressen finns inte registrerad");
                     break;
                 case 'auth/wrong-password':
-                    LOGIN.showDialog("Lösenordet är felaktigt, försök igen.");
+                    LOGIN.showDialog("Lösenordet är felaktigt, försök igen");
                     $('#pwd-login').val("");
                     break;
                 default:
@@ -180,7 +168,7 @@ window.LOGIN.register = function() {
                 }, function(error) {
                     console.log("force logout failed")
                 });
-                LOGIN.verify(newUser)
+                LOGIN.verify()
                 $('#loginNavigator')[0].popPage();
                 LOGIN.showDialog("Vi har skickat ett aktiverings mail till dig!");
             }).catch(function(error) {
@@ -195,7 +183,7 @@ window.LOGIN.register = function() {
                         LOGIN.showDialog("Email/Password not enabled. Kontakta shamra@kth.se");
                         break;
                     case "auth/operation-not-allowed":
-                        LOGIN.showDialog("Lösenordet för kort. Måste vara längre än 6 tecken.");
+                        LOGIN.showDialog("Lösenordet för kort. Måste vara längre än 6 tecken");
                         break;
                     default:
                         LOGIN.showDialog("Okänt fel. Kontakta shamra@kth.se");
@@ -213,9 +201,10 @@ window.LOGIN.register = function() {
     }
 }
 
-window.LOGIN.verify = function(newUser) {
+window.LOGIN.verify = function(user) {
     //https://firebase.google.com/docs/reference/js/firebase.User#sendEmailVerification
-    newUser.sendEmailVerification().then(function() {
+
+    user.sendEmailVerification().then(function() {
         console.log("Email sent!")
     }).catch(function(error) {
         switch (error.code) {
@@ -224,7 +213,6 @@ window.LOGIN.verify = function(newUser) {
                 break;
             default:
                 LOGIN.showDialog("Okänt fel: " + error.code)
-
-        }
+            }
     });
 }
