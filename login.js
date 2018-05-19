@@ -10,7 +10,7 @@ import { app } from './app.js';
 
 // reference for report : https://stackoverflow.com/questions/2855865/validating-email-addresses-using-jquery-and-regex
 var mailRegex = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@kth\.se$/gm;
-
+var mailEndingRegex = /@kth.se\s*$/;
 
 /* Firebase observer */
 // https://firebase.google.com/docs/reference/js/firebase.auth.Auth#onAuthStateChanged
@@ -83,59 +83,80 @@ window.LOGIN.showPage = function(page) {
 }
 
 window.LOGIN.goLogin = function () {
-    var email = $('#user-login')[0].value
-    var password = $('#pwd-login')[0].value
+    var email = $.trim($('#user-login').val().toLowerCase())
+    var password = $.trim($('#pwd-login').val())
     //https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signInWithEmailAndPassword
 
+    console.log(email)
+    console.log(password)
 
-    firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(function (user) {
-        if(!user.emailVerified) {
-            // Notify user that email verification is missing
-            LOGIN.showReVerifyDialog(user)
-            // force logout user
-            firebase.auth().signOut().then(function() {
-                // https://firebase.google.com/docs/auth/web/password-auth#next_steps
-                console.log("force logout")
-            }, function(error) {
-                console.log("force logout failed")
-            });
-        } else {
-            console.log("A-OK!")
-        }
-    })
-    .catch(function(error) {
-        // Handle Errors here.
-        console.log(error)
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        /*
-            Error Codes
-                auth/invalid-email
-                Thrown if the email address is not valid.
+    // append @kth.se
+    if (!mailEndingRegex.test(email)) {
+        console.log(email)
+        email = email + "@kth.se";
+        console.log(email)
+    }
 
-                auth/user-disabled
-                Thrown if the user corresponding to the given email has been disabled.
-
-                auth/user-not-found
-                Thrown if there is no user corresponding to the given email.
-
-                auth/wrong-password
-                Thrown if the password is invalid for the given email, or the account corresponding to the email does not have a password set.
-        */
-    })
+    // not valid email a valid kth-mail?
+    if (LOGIN.isKTHMail(email)) {
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(function (user) {
+            if(!user.emailVerified) {
+                // Notify user that email verification is missing
+                LOGIN.showReVerifyDialog(user)
+                // force logout user
+                firebase.auth().signOut().then(function() {
+                    // https://firebase.google.com/docs/auth/web/password-auth#next_steps
+                    console.log("force logout")
+                }, function(error) {
+                    console.log("force logout failed")
+                });
+            } else {
+                console.log("A-OK!")
+            }
+        })
+        .catch(function(error) {
+            switch (error.code) {
+                case 'auth/invalid-email':
+                    LOGIN.showDialog("Ogiltlig mailadress.");
+                    break;
+                case 'auth/user-disabled':
+                    LOGIN.showDialog("Användaren är avstängd.");
+                    break;
+                case 'auth/user-not-found':
+                    LOGIN.showDialog("Mailadressen finns inte registrerad.");
+                    break;
+                case 'auth/wrong-password':
+                    LOGIN.showDialog("Lösenordet är felaktigt, försök igen.");
+                    $('#pwd-login').val("");
+                    break;
+                default:
+                    LOGIN.showDialog("Okänt fel. Var god maila shamra@kth.se");
+                return
+            }
+        })
+    } else {
+        LOGIN.showDialog("Du måste logga in med en KTH-mail!")
+        return
+    }
 }
 
 window.LOGIN.register = function() {
     // TODO: https://stackoverflow.com/questions/32151178/how-do-you-include-a-username-when-storing-email-and-password-using-firebase-ba
-    var username = $('#user-register')[0].value
-    var email = $('#mail-register')[0].value
-    var password = $('#pwd-register')[0].value
-    var passCheck = $('#pwd-check-register')[0].value
+    var username = $.trim($('#user-register').val())
+    var email = $.trim($('#mail-register').val().toLowerCase())
+    var password = $.trim($('#pwd-register').val())
+    var passCheck = $.trim($('#pwd-check-register').val())
     var errorPrintDiv = $('#error-register')[0]
 
     // check validation of mail
-    if (LOGIN.isKTHMail(email) && password === passCheck) {
+    if (LOGIN.isKTHMail(email)) {
+        if (password !== passCheck) {
+            LOGIN.showDialog("Du måste ange samma lösenord två gånger")
+            $('#pwd-register').val("")
+            $('#pwd-check-register').val("")
+            return
+        }
         var user = firebase.auth().currentUser;
         if(user === null) {
             https://firebase.google.com/docs/reference/js/firebase.auth.Auth#createUserWithEmailAndPassword
@@ -163,31 +184,32 @@ window.LOGIN.register = function() {
                 $('#loginNavigator')[0].popPage();
                 LOGIN.showDialog("Vi har skickat ett aktiverings mail till dig!");
             }).catch(function(error) {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                /*
-                Error Codes
-                    auth/email-already-in-use
-                    Thrown if there already exists an account with the given email address.
-
-                    auth/invalid-email
-                    Thrown if the email address is not valid.
-
-                    auth/operation-not-allowed
-                    Thrown if email/password accounts are not enabled. Enable email/password accounts
-                    in the Firebase Console, under the Auth tab.
-
-                    auth/weak-password
-                    Thrown if the password is not strong enough.
-                */
+                switch (error.code) {
+                    case "auth/email-already-in-use":
+                        LOGIN.showDialog("Det finns redan en användare med den mailadressen");
+                        break;
+                    case "auth/invalid-email":
+                        LOGIN.showDialog("Detta är inte en giltlig mailadress");
+                        break;
+                    case "auth/operation-not-allowed":
+                        LOGIN.showDialog("Email/Password not enabled. Kontakta shamra@kth.se");
+                        break;
+                    case "auth/operation-not-allowed":
+                        LOGIN.showDialog("Lösenordet för kort. Måste vara längre än 6 tecken.");
+                        break;
+                    default:
+                        LOGIN.showDialog("Okänt fel. Kontakta shamra@kth.se");
+                }
                 return
             })
         } else {
-            console.log("user not null!")
-            console.log(user)
+            LOGIN.showDialog("Du är redan registrerad! Logga in istället.")
+            return
         }
     } else {
+        // TODO: Varför hamnar vi här ibland? Fel på regex?
         LOGIN.showDialog("Du måste ange din KTH-mail!")
+        return
     }
 }
 
@@ -195,33 +217,14 @@ window.LOGIN.verify = function(newUser) {
     //https://firebase.google.com/docs/reference/js/firebase.User#sendEmailVerification
     newUser.sendEmailVerification().then(function() {
         console.log("Email sent!")
-        // Redirect back to login screen
     }).catch(function(error) {
-        console.log("No email sent")
-        console.log(error)
-        /*
-        Error codes
-            auth/argument-error
-            Thrown if handleCodeInApp is false.
+        switch (error.code) {
+            case 'auth/invalid-email':
+                LOGIN.showDialog("Ogiltlig mailadress");
+                break;
+            default:
+                LOGIN.showDialog("Okänt fel: " + error.code)
 
-            auth/invalid-email
-            Thrown if the email address is not valid.
-
-            auth/missing-android-pkg-name
-            An Android package name must be provided if the Android app is required to be installed.
-
-            auth/missing-continue-uri
-            A continue URL must be provided in the request.
-
-            auth/missing-ios-bundle-id
-            An iOS Bundle ID must be provided if an App Store ID is provided.
-
-            auth/invalid-continue-uri
-            The continue URL provided in the request is invalid.
-
-            auth/unauthorized-continue-uri
-            The domain of the continue URL is not whitelisted. Whitelist the domain in the Firebase console.
-        */
-
+        }
     });
 }
