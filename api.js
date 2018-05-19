@@ -50,7 +50,7 @@ window.firebaseController.loadChatRoomList = function() {
 }
 
 // Kalla på denna funktion när ni har renderat ny chattsida, för att visa posts
-window.firebaseController.initRoom = function(room) {
+window.firebaseController.initRoom = function(room, callback) {
     var ref = db.ref("rooms/" + room + "/messages");
     firebaseController.currentRoom = room
     console.log(firebaseController.currentRoom)
@@ -68,6 +68,7 @@ window.firebaseController.initRoom = function(room) {
                 }
             }
         })
+        callback();
     });
 
     ref.orderByChild('timestamp').startAt(Date.now()).on('child_added', function(post) {
@@ -165,7 +166,11 @@ window.UI.showChatRoom = function(roomId) {
     .then(function() {
         // passed data by pushPage
         var data = $('#appNavigator')[0].topPage.data
-        firebaseController.initRoom(data.id);
+        // initroom(data, callback), used with async func
+        firebaseController.initRoom(data.id, function() {
+            // autoscroll function
+            $('.page__content').animate({scrollTop : $('.page__content').height()+500}, 1000);
+        });
         $('#chat-room-header')[0].textContent = data.id
     });
 }
