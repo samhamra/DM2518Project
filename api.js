@@ -231,9 +231,9 @@ window.UI.render = function(board, name, msg, type) {
   } else {
     container = UI.renderMessage(board, name, msg);
   }
-  console.log(container[0]);
+  console.log(container);
   console.log($(container)[0]);
-  $(container)[0].load(function() {
+  $(container)[0].on('load', function() {
     if(isScrolledToBottom === true) {
       console.log("scrolling to bottom")
         scroller.scrollTop = scroller.scrollHeight - scroller.clientHeight;
