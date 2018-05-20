@@ -40,10 +40,10 @@
         <div id="login-form">
             <div><input id="user-login" type="text" class="text-input text-input--underbar" placeholder="@kth.se" value=""></div>
             <div><input id="pwd-login" type="password" class="text-input text-input--underbar" placeholder="Password" value=""></div>
-            <ons-button id="loginbutton" onclick="LOGIN.goLogin();">
+            <ons-button class="butt" id="loginbutton" onclick="LOGIN.goLogin();">
                 SIGN IN
             </ons-button>
-            <ons-button id="ingetkontobutton" onclick="LOGIN.showPage('login.html');">
+            <ons-button class="butt" id="ingetkontobutton" onclick="LOGIN.showPage('login.html');">
                 SIGN UP
             </ons-button>
         </div>
@@ -52,22 +52,22 @@
 
 <ons-template id="login.html">
     <ons-page>
-        <ons-toolbar id="chat-header">
+        <ons-toolbar class="toolbar">
             <div class="left">
                 <ons-back-button>Back</ons-back-button>
             </div>
         </ons-toolbar>
-        <img id="login-logo" src="img/kth-logo-1.png">
+
         <div id="register-form">
+            <img src="img/kth-logo-1.png">
             <p>
-                Hi! Get access to KTHCHat by signing up with your active KTH email address
+                Hi! Get access to KTHCHat by signing up with your active KTH email address.
             </p>
-            <div id="error-register"></div>
             <div><input id="user-register" type="text" class="text-input text-input--underbar" placeholder="User name" value=""></div>
             <div><input id="mail-register" type="text" class="text-input text-input--underbar" placeholder="Email address" value=""></div>
             <div><input id="pwd-register" type="password" class="text-input text-input--underbar" placeholder="Password" value=""></div>
             <div><input id="pwd-check-register" type="password" class="text-input text-input--underbar" placeholder="Password" value=""></div>
-            <ons-button onclick="LOGIN.register()">
+            <ons-button class="butt" onclick="LOGIN.register()">
                 SIGN UP
             </ons-button>
         </div>
@@ -81,7 +81,7 @@
       <p id="dialog-text">
       </p>
 
-      <ons-button onclick="LOGIN.hideDialog('dialog')">CLOSE</ons-button>
+      <ons-button class="butt" onclick="LOGIN.hideDialog('dialog')">CLOSE</ons-button>
     </div>
   </ons-dialog>
 </template>

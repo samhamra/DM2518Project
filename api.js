@@ -55,7 +55,7 @@ window.firebaseController.loadChatRoomList = function() {
     ref.once("value", function(snapshot) {
         snapshot.forEach(function(element) {
             Object.keys(element.val()).forEach(function(room) {
-                UI.addChatRoomToList(room)
+                UI.addChatRoomToList(room, snapshot.child('rooms/'+room+"/name").val())
             })
         })
     })
@@ -190,8 +190,9 @@ window.UI.showChatRoom = function(roomId) {
         roomId
     </ons-list-item>
 */
-window.UI.addChatRoomToList = function(roomId) {
- var message ="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+window.UI.addChatRoomToList = function(roomId, name) {
+    console.log(roomId)
+    var message = name
     var list = $("#chat-room-list")
     var card = '<div id="'+roomId+'", style="", onclick = UI.showChatRoom(\"' + roomId + '\")><div class="card"><h2 class="card__title">' + roomId + '</h2><div class="card__content">'+ message +'</div></div></div>'
 
