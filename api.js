@@ -231,7 +231,8 @@ window.UI.render = function(board, name, msg, type) {
   } else {
     container = UI.renderMessage(board, name, msg);
   }
-
+  console.log(container);
+  console.log($(container));
   $(container).load(function() {
     if(isScrolledToBottom === true) {
       console.log("scrolling to bottom")
