@@ -89,7 +89,6 @@ function guid() {
 }
 
 window.firebaseController.uploadPicture = function(event) {
-    console.log(event);
     var fileList = event.target.files;
     let file = null;
     for (let i = 0; i < fileList.length; i++) {
@@ -204,28 +203,6 @@ window.UI.renderPicture = function(board, name, url) {
 
 }
 
-
-
-window.UI.render = function(board, name, msg, type) {
-  var scroller = $('#chatContainer .page__content')[0];
-
-  var isScrolledToBottom = false;
-  if((scroller.scrollTop + scroller.clientHeight) === scroller.scrollHeight) {
-    isScrolledToBottom = true;
-  }
-
-  if(type === 'image') {
-    UI.renderPicture(board, name, msg);
-  } else {
-    UI.renderMessage(board, name, msg);
-  }
-
-  if(isScrolledToBottom === true) {
-      scroller.scrollTop = scroller.scrollHeight - scroller.clientHeight;
-    }
-}
-
-
 window.UI.renderMessage = function(board, name, msg) {
 
     var container = $(board).append(
@@ -237,6 +214,31 @@ window.UI.renderMessage = function(board, name, msg) {
 
 
 }
+
+
+window.UI.render = function(board, name, msg, type) {
+  var scroller = $('#chatContainer .page__content')[0];
+
+  var isScrolledToBottom = false;
+  if((scroller.scrollTop + scroller.clientHeight) === scroller.scrollHeight) {
+    isScrolledToBottom = true;
+    console.log("is scrolled to bottom")
+  }
+
+  if(type === 'image') {
+    UI.renderPicture(board, name, msg);
+  } else {
+    UI.renderMessage(board, name, msg);
+  }
+
+  if(isScrolledToBottom === true) {
+    console.log("scrolling to bottom")
+      scroller.scrollTop = scroller.scrollHeight - scroller.clientHeight;
+    }
+}
+
+
+
 
 
 
