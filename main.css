@@ -45,14 +45,16 @@ h1 {
     margin-right: auto
 }
 
-ons-icon {
+#msg-toolbar ons-icon {
     margin-right: 2.5px;
     margin-left: 2.5px;
     padding-top: 10px;
     font-size:20px !important;
     color: #1954a6;
 }
-
+ons-list-item ons-icon{
+    margin-right: 5px;
+}
 .iconFunction {
     width: 0.1px;
 	height: 0.1px;
