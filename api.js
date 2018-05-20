@@ -233,12 +233,13 @@ window.UI.render = function(board, name, msg, type) {
   }
   console.log(container);
   console.log($(container)[0]);
-  $(container)[0].on('load', function() {
+  container[0].addEventListener("load", function(){
     if(isScrolledToBottom === true) {
       console.log("scrolling to bottom")
         scroller.scrollTop = scroller.scrollHeight - scroller.clientHeight;
       }
-  })
+  });
+
 
 
 }
