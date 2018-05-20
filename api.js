@@ -195,16 +195,16 @@ window.UI.imagePopup = function(url){
     $("#modal__content").attr("src", url);
     $("#imageModal").show();
 }
-  
+
 
 window.UI.renderPicture = function(board, name, url) {
-    
+
   var container = $(board).append(
         $('<div>').attr('class', function() {return name == firebase.auth().currentUser.displayName ? 'msg-container msg-own' : 'msg-container'})
             .append($('<div>').attr('class', 'msg-userid').text(name))
             .append($('<img>').attr('class', 'picture-container').attr("src", url).attr('onClick','UI.imagePopup("'+url+'")')));
 
-    
+
   /*var container = document.createElement("DIV");
   var pictureContainer = document.createElement("DIV");
   var picture = document.createElement("IMG");
@@ -217,12 +217,26 @@ window.UI.renderPicture = function(board, name, url) {
 }
 
 window.UI.renderMessage = function(board, name, msg) {
+  if(isScrolledToBottom)
+      chat.scrollTop = chat.scrollHeight - chat.clientHeight;
+  }, 500)
     var container = $(board).append(
         $('<div>').attr('class', function() {return name == firebase.auth().currentUser.displayName ? 'msg-container msg-own' : 'msg-container'})
             .append($('<div>').attr('class', 'msg-userid').text(name))
             .append($('<div>').attr('class', 'msg-content').text(msg))
     );
-    
+
+    function getDocHeight() {
+        var D = document;
+        return Math.max(
+            D.body.scrollHeight, D.documentElement.scrollHeight,
+            D.body.offsetHeight, D.documentElement.offsetHeight,
+            D.body.clientHeight, D.documentElement.clientHeight
+        );
+    }
+
+
+
     /*var container = document.createElement("DIV")
     var msgContainer = document.createElement("DIV")
     msgContainer.textContent = msg
@@ -240,10 +254,10 @@ window.UI.checkPost = function(event) {
 window.UI.renderProfile = function() {
     $(".profile__img").attr("src", "https://kth.instructure.com/images/messages/avatar-50.png").attr("width", "40%")
     $(".profile__name").text(firebase.auth().currentUser.displayName);
-    $(".profile__email").text(firebase.auth().currentUser.email); 
+    $(".profile__email").text(firebase.auth().currentUser.email);
     $(".profile__content").text("Profile content");
 }
-  
+
 window.UI.closeModal = function(){
     $("#imageModal").hide();
 }
