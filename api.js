@@ -209,12 +209,14 @@ window.UI.renderPicture = function(board, name, url) {
 
 window.UI.renderMessage = function(board, name, msg) {
   var scroller = $('#chatContainer .page__content')[0];
-
+  console.log("1");
   var isScrolledToBottom = false;
+  console.log("2");
   if(scroller.scrollTop + scroller.clientHeight === scroller.scrollHeight) {
+    console.log("3");
     isScrolledToBottom = true;
   }
-
+console.log("4");
 
     var container = $(board).append(
         $('<div>').attr('class', function() {return name == firebase.auth().currentUser.displayName ? 'msg-container msg-own' : 'msg-container'})
