@@ -14,7 +14,7 @@ p {
 h1 {
     color: #1954a6;
     text-align: center;
-    
+
 }
 #logout {
     position: center;
@@ -73,7 +73,7 @@ img {
 }
 .msg-container{
     border-radius: 15px;
-    background-color: #adaeb1;
+    background-color: #f1f0f0;
     width: 75%;
     padding: 1.5%;
     margin: 1%;
@@ -86,7 +86,7 @@ img {
     text-align: right;
     float: right;
     color: #fff;
-    background-color: #0084ff;  
+    background-color: #3d82f7;
 }
 .profile__img{
     border-radius: 50%;
