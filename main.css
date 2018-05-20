@@ -153,3 +153,21 @@ img {
     height: 90%;
     padding: 5%;
 }
+
+.card__title {
+    /*color: white;*/
+    margin-top: 0%;
+    padding-top: 0%;
+}
+
+
+.card {
+    padding-top: 2%;
+}
+
+.card__content {
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
