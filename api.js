@@ -231,20 +231,13 @@ window.UI.render = function(board, name, msg, type) {
   } else {
     container = UI.renderMessage(board, name, msg);
   }
-  console.log(container);
-  console.log($(container)[0]);
-  $(container[0]).load(function() {
-    console.log("jquery loaded atleast");
-  })
-  container[0].addEventListener("load", function(isScrolledToBottom){
-    console.log("loaded")
+
+// lägg till detta under på event för container.load(), så att bilden laddas innan vi kollar höjden
+
     if(isScrolledToBottom === true) {
       console.log("scrolling to bottom")
         scroller.scrollTop = scroller.scrollHeight - scroller.clientHeight;
       }
-  });
-
-
 
 }
 
