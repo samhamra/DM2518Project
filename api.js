@@ -205,20 +205,11 @@ window.UI.renderPicture = function(board, name, url) {
             .append($('<img>').attr('class', 'picture-container').attr("src", url).attr('onClick','UI.imagePopup("'+url+'")')));
 
 
-  /*var container = document.createElement("DIV");
-  var pictureContainer = document.createElement("DIV");
-  var picture = document.createElement("IMG");
-  picture.setAttribute("src", url);
-  pictureContainer.appendChild(picture);
-  container.textContent = name;
-  container.setAttribute("id", "picture-container");
-  container.appendChild(pictureContainer);
-  board.appendChild(container)*/
 }
 
 window.UI.renderMessage = function(board, name, msg) {
   var scroller = $('#chatContainer .page__content')[0];
-  // scrolled to bottom
+
   var isScrolledToBottom = false;
   if(scroller.scrollTop + scroller.clientHeight === scroller.scrollHeight) {
     isScrolledToBottom = true;
@@ -233,17 +224,11 @@ window.UI.renderMessage = function(board, name, msg) {
 
     if(isScrolledToBottom) {
         scroller.scrollTop = scroller.scrollHeight - scroller.clientHeight;
+      }
+
 }
 
 
-    /*var container = document.createElement("DIV")
-    var msgContainer = document.createElement("DIV")
-    msgContainer.textContent = msg
-    container.textContent = name
-    container.setAttribute("id","msg-container")
-    container.appendChild(msgContainer)
-    board.appendChild(container)*/
-}
 
 window.UI.checkPost = function(event) {
     // if press 'enter'
