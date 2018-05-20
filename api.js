@@ -233,6 +233,9 @@ window.UI.render = function(board, name, msg, type) {
   }
   console.log(container);
   console.log($(container)[0]);
+  $(container[0]).load(function() {
+    console.log("jquery loaded atleast");
+  })
   container[0].addEventListener("load", function(isScrolledToBottom){
     console.log("loaded")
     if(isScrolledToBottom === true) {
