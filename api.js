@@ -194,22 +194,23 @@ window.UI.imagePopup = function(url){
 
 
 window.UI.renderPicture = function(board, name, url) {
-
-  var container = $(board).append(
-        $('<div>').attr('class', function() {return name == firebase.auth().currentUser.displayName ? 'msg-container msg-own' : 'msg-container'})
-            .append($('<div>').attr('class', 'msg-userid').text(name))
-            .append($('<img>').attr('class', 'picture-container').attr("src", url).attr('onClick','UI.imagePopup("'+url+'")')));
+  var container = $('<div>').attr('class',
+    function() {return name == firebase.auth().currentUser.displayName ? 'msg-container msg-own' : 'msg-container'})
+      .append($('<div>').attr('class', 'msg-userid').text(name))
+      .append($('<img>').attr('class', 'picture-container').attr("src", url).attr('onClick','UI.imagePopup("'+url+'")'))
+  $(board).append(container);
+  return container;
 
 
 }
 
 window.UI.renderMessage = function(board, name, msg) {
 
-    var container = $(board).append(
-        $('<div>').attr('class', function() {return name == firebase.auth().currentUser.displayName ? 'msg-container msg-own' : 'msg-container'})
-            .append($('<div>').attr('class', 'msg-userid').text(name))
-            .append($('<div>').attr('class', 'msg-content').text(msg))
-    );
+    var container = $('<div>').attr('class', function() {return name == firebase.auth().currentUser.displayName ? 'msg-container msg-own' : 'msg-container'})
+          .append($('<div>').attr('class', 'msg-userid').text(name))
+          .append($('<div>').attr('class', 'msg-content').text(msg));
+    $(board).append(container);
+    return container;
 
 
 
@@ -224,17 +225,21 @@ window.UI.render = function(board, name, msg, type) {
     isScrolledToBottom = true;
     console.log("is scrolled to bottom")
   }
-
+  var container;
   if(type === 'image') {
-    UI.renderPicture(board, name, msg);
+    container = UI.renderPicture(board, name, msg);
   } else {
-    UI.renderMessage(board, name, msg);
+    container = UI.renderMessage(board, name, msg);
   }
 
-  if(isScrolledToBottom === true) {
-    console.log("scrolling to bottom")
-      scroller.scrollTop = scroller.scrollHeight - scroller.clientHeight;
-    }
+  $(container).load(function() {
+    if(isScrolledToBottom === true) {
+      console.log("scrolling to bottom")
+        scroller.scrollTop = scroller.scrollHeight - scroller.clientHeight;
+      }
+  })
+
+
 }
 
 
