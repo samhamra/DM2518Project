@@ -62,6 +62,7 @@ window.firebaseController.initRoom = function(room, callback) {
             // använd hur ni vull
             if(post.val().type) {
                 if(post.val().type == 'image') {
+
                     UI.renderPicture(messageBoard, post.val().name, post.val().message);
                 } else {
                     UI.renderMessage(messageBoard, post.val().name, post.val().message);
@@ -73,11 +74,7 @@ window.firebaseController.initRoom = function(room, callback) {
 
     ref.orderByChild('timestamp').startAt(Date.now()).on('child_added', function(post) {
           if(post.val().type) {
-              if(post.val().type == 'image') {
-                UI.renderPicture(messageBoard, post.val().name, post.val().message);
-              } else {
-                UI.renderMessage(messageBoard, post.val().name, post.val().message);
-              }
+                UI.render(messageBoard, post.val().name, post.val().message, post.val().type)
             }
     });
 }
@@ -207,15 +204,29 @@ window.UI.renderPicture = function(board, name, url) {
 
 }
 
-window.UI.renderMessage = function(board, name, msg) {
+
+
+window.UI.render = function(board, name, msg, type) {
   var scroller = $('#chatContainer .page__content')[0];
 
   var isScrolledToBottom = false;
-  if(scroller.scrollTop + scroller.clientHeight === scroller.scrollHeight) {
+  if((scroller.scrollTop + scroller.clientHeight) === scroller.scrollHeight) {
     isScrolledToBottom = true;
-
   }
-console.log(isScrolledToBottom);
+
+  if(type === 'image') {
+    UI.renderPicture(board, name, msg);
+  } else {
+    UI.renderMessage(board, name, msg);
+  }
+
+  if(isScrolledToBottom === true) {
+      scroller.scrollTop = scroller.scrollHeight - scroller.clientHeight;
+    }
+}
+
+
+window.UI.renderMessage = function(board, name, msg) {
 
     var container = $(board).append(
         $('<div>').attr('class', function() {return name == firebase.auth().currentUser.displayName ? 'msg-container msg-own' : 'msg-container'})
@@ -223,9 +234,7 @@ console.log(isScrolledToBottom);
             .append($('<div>').attr('class', 'msg-content').text(msg))
     );
 
-    if(isScrolledToBottom === true) {
-        scroller.scrollTop = scroller.scrollHeight - scroller.clientHeight;
-      }
+
 
 }
 
