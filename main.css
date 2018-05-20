@@ -46,10 +46,14 @@ h1 {
 }
 
 ons-icon {
-    margin-right: 15px;
+    margin-right: 2.5px;
+    margin-left: 2.5px;
+    padding-top: 10px;
+    font-size:20px !important;
+    color: #1954a6;
 }
 
-#file {
+.iconFunction {
     width: 0.1px;
 	height: 0.1px;
 	opacity: 0;
@@ -62,5 +66,43 @@ img {
     max-width: 100%;
     max-height: auto;
 }
-
-
+#msg-input{
+    width: 75%;
+}
+.msg-container{
+    border-radius: 15px;
+    background-color: #adaeb1;
+    width: 75%;
+    padding: 1.5%;
+    margin: 1%;
+    float: left;
+}
+.msg-userid{
+    font-weight: bold;
+}
+.msg-own{
+    text-align: right;
+    float: right;
+    color: #fff;
+    background-color: #0084ff;  
+}
+.profile__img{
+    border-radius: 50%;
+    border: 1px solid gray;
+    margin: 3%;
+}
+.profile__name{
+    font-size: 60px;
+}
+.profile__email{
+    font-size: 20px;
+}
+.profile__userInfo{
+    left: 50%;
+    position: absolute;
+    top: 10%;
+}
+.profile__content{
+    height: 90%;
+    padding: 5%;
+}

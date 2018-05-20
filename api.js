@@ -32,8 +32,14 @@ window.firebaseController.post = function() {
     var textarea = document.getElementById("msg-input");
     var ref = db.ref("rooms/" + firebaseController.currentRoom + "/messages");
     var newChildRef = ref.push();
+    
+    var message = textarea.value;
+    if(textarea.value == "") {
+        message = "👍";
+    }
+    
     // set form data
-    newChildRef.set({type: 'text', timestamp: firebase.database.ServerValue.TIMESTAMP, name: firebase.auth().currentUser.displayName, message: textarea.value});
+    newChildRef.set({type: 'text', timestamp: firebase.database.ServerValue.TIMESTAMP, name: firebase.auth().currentUser.displayName, message: message});
     textarea.value = ""
 }
 
@@ -241,14 +247,11 @@ window.UI.render = function(board, name, msg, type) {
 
 }
 
-
-
-
-
-
 window.UI.checkPost = function(event) {
     // if press 'enter'
     if(event.keyCode == 13) firebaseController.post();
+    else if ($("#msg-input")[0].value == "") $("#sendIcon").attr("icon", "md-thumb-up");
+    else $("#sendIcon").attr("icon", "md-mail-send");
 }
 
 window.UI.renderProfile = function() {

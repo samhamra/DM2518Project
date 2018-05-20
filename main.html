@@ -11,7 +11,6 @@
         <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
         <script src="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.js"></script>
         <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.css"/>
-         <link rel="stylesheet" href="style.css">
         <script type="module" src="app.js"></script>
         <script type="module" src="api.js"></script>
         <link rel="stylesheet" href="main.css">
@@ -112,23 +111,29 @@
 
         <ons-bottom-toolbar>
             <div class="center">
-
-                <textarea id="msg-input" class="textarea" rows="3" cols ="35" placeholder="Type here..." onkeyup="UI.checkPost(event)"></textarea>
-
-                <input onchange="firebaseController.uploadPicture(event)" type="file" id="file" accept="image/*">
+                <input onchange="firebaseController.uploadPicture(event)" type="file" id="file" class="iconFunction" accept="image/*" >
+                
+                <ons-icon icon="md-map"></ons-icon>
                 <label for="file">
-                    <ons-icon icon="md-image" size="30px" style="color:#1954a6;"></ons-icon>
+                    <ons-icon icon="md-image" ></ons-icon>
                 </label>
+                    
+                
+                <textarea id="msg-input" class="textarea" rows="3" cols ="20" placeholder="Type here..." onkeyup="UI.checkPost(event)"></textarea>
 
-                <ons-icon icon="md-mail-send" size ="40px" style="color:#1954a6;" onclick="firebaseController.post()">
-                </ons-icon>
+                
+                <ons-icon id="sendIcon" icon="md-thumb-up" onclick="firebaseController.post()"></ons-icon>
+                <!--
+                <ons-icon icon="md-mail-send" size ="19px" style="color:#1954a6;" onclick="firebaseController.post()"></ons-icon>
+                -->
+                
             </div>
         </ons-bottom-toolbar>
     </ons-page>
 </ons-template>
 
 <ons-modal direction="up" id="imageModal" onclick="UI.closeModal()">
-      <img style="text-align: center" id="modal__content"></img>
+      <img style="text-align: center" id="modal__content" />
 
 </ons-modal>
 
@@ -150,7 +155,7 @@
           <script>
                 UI.renderProfile()
           </script>
-          <img class="profile__img"></img>
+          <img class="profile__img" />
           <div class="profile__userInfo">
               <div class="profile__name"></div>
               <div class="profile__email"></div>
@@ -181,7 +186,7 @@
       <ons-toolbar>
        <div class="left">
          <ons-toolbar-button onclick="UI.open()">
-           <ons-icon icon="md-menu"></ons-  icon>
+           <ons-icon icon="md-menu"></ons-icon>
          </ons-toolbar-button>
        </div>
        <div class="center">
