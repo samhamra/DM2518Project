@@ -4,6 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+   
         <script src='https://d3js.org/d3.v3.min.js'></script>
         <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
         <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
@@ -14,6 +15,7 @@
         <script type="module" src="app.js"></script>
         <script type="module" src="api.js"></script>
         <link rel="stylesheet" href="main.css">
+        
 
     </head>
     <body>
@@ -177,7 +179,20 @@
          Settings
        </div>
      </ons-toolbar>
-    <p>Settings</p>
+      <ons-list>
+    <ons-list-item>
+      <div class="center">
+        Enable Location Tracking
+      </div>
+      <div class="right">
+        <ons-switch id="locationSwitch"></ons-switch>
+          
+          
+      </div>
+    </ons-list-item>
+      </ons-list>
+      <ons-icon icon="md-map" onclick="UI.location()"></ons-icon>
+      <div id="locTest"></div>  
   </ons-page>
 </template>
 

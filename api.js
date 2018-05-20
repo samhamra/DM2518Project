@@ -9,6 +9,12 @@ var storage = app.storage();
 window.firebaseController = {}
 window.firebaseController.currentRoom = ""
 
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 59.3498092, lng: 18.0684758},
+          zoom: 15
+        });
+      }
 /* Firebase observer */
 // https://firebase.google.com/docs/reference/js/firebase.auth.Auth#onAuthStateChanged
 firebase.auth().onAuthStateChanged(function(user) {
@@ -263,4 +269,19 @@ window.UI.renderProfile = function() {
 
 window.UI.closeModal = function(){
     $("#imageModal").hide();
+}
+
+window.UI.location = function(){
+    if($("#locationSwitch")[0].checked){
+        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+        $("#locTest").text = "Geolocation is not supported by this browser.";
+        }
+    }
+}
+
+function showPosition(position) {
+    position.coords.latitudeposition.coords.longitude
+
 }
