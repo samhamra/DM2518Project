@@ -38,12 +38,12 @@ window.firebaseController.post = function() {
     var textarea = document.getElementById("msg-input");
     var ref = db.ref("rooms/" + firebaseController.currentRoom + "/messages");
     var newChildRef = ref.push();
-    
+
     var message = textarea.value;
     if(textarea.value == "") {
         message = "👍";
     }
-    
+
     // set form data
     newChildRef.set({type: 'text', timestamp: firebase.database.ServerValue.TIMESTAMP, name: firebase.auth().currentUser.displayName, message: message});
     textarea.value = ""

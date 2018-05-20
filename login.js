@@ -73,8 +73,7 @@ window.LOGIN.goLogin = function () {
     var password = $.trim($('#pwd-login').val())
     //https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signInWithEmailAndPassword
 
-    console.log(email)
-    console.log(password)
+
 
     // append @kth.se
     if (!mailEndingRegex.test(email)) {
@@ -90,7 +89,7 @@ window.LOGIN.goLogin = function () {
             if(!user.emailVerified) {
                 // Notify user that email verification is missing
                 // TODO: re-validate
-                LOGIN.showDialog("Du har inte aktiverat ditt konto")
+                LOGIN.showDialog("You must activate your account")
                 // force logout user
                 firebase.auth().signOut().then(function() {
                     // https://firebase.google.com/docs/auth/web/password-auth#next_steps
@@ -106,25 +105,25 @@ window.LOGIN.goLogin = function () {
         .catch(function(error) {
             switch (error.code) {
                 case 'auth/invalid-email':
-                    LOGIN.showDialog("Ogiltlig mailadress");
+                    LOGIN.showDialog(email + " is not a valid email address");
                     break;
                 case 'auth/user-disabled':
-                    LOGIN.showDialog("Användaren är avstängd");
+                    LOGIN.showDialog("This user is disabled. Contact shamra@kth.se");
                     break;
                 case 'auth/user-not-found':
-                    LOGIN.showDialog("Mailadressen finns inte registrerad");
+                    LOGIN.showDialog(email + " is not registered. Create an account");
                     break;
                 case 'auth/wrong-password':
-                    LOGIN.showDialog("Lösenordet är felaktigt, försök igen");
+                    LOGIN.showDialog("Wrong password, Try again");
                     $('#pwd-login').val("");
                     break;
                 default:
-                    LOGIN.showDialog("Okänt fel. Var god maila shamra@kth.se");
+                    LOGIN.showDialog("Unknown error. Contact shamra@kth.se");
                 return
             }
         })
     } else {
-        LOGIN.showDialog("Du måste logga in med en KTH-mail!")
+        LOGIN.showDialog("You must login with a KTH email address")
         return
     }
 }
@@ -140,7 +139,7 @@ window.LOGIN.register = function() {
     // check validation of mail
     if (LOGIN.isKTHMail(email)) {
         if (password !== passCheck) {
-            LOGIN.showDialog("Du måste ange samma lösenord två gånger")
+            LOGIN.showDialog("Passwords not identical, Try again")
             $('#pwd-register').val("")
             $('#pwd-check-register').val("")
             return
@@ -170,33 +169,33 @@ window.LOGIN.register = function() {
                 });
                 LOGIN.verify()
                 $('#loginNavigator')[0].popPage();
-                LOGIN.showDialog("Vi har skickat ett aktiverings mail till dig!");
+                LOGIN.showDialog("We have sent an email with a confirmation link to your email address");
             }).catch(function(error) {
                 switch (error.code) {
                     case "auth/email-already-in-use":
-                        LOGIN.showDialog("Det finns redan en användare med den mailadressen");
+                        LOGIN.showDialog("There is already a user with this email");
                         break;
                     case "auth/invalid-email":
-                        LOGIN.showDialog("Detta är inte en giltlig mailadress");
+                        LOGIN.showDialog(email + " is not a valid email adress");
                         break;
                     case "auth/operation-not-allowed":
-                        LOGIN.showDialog("Email/Password not enabled. Kontakta shamra@kth.se");
+                        LOGIN.showDialog("Email/Password not enabled. Contact shamra@kth.se");
                         break;
                     case "auth/operation-not-allowed":
-                        LOGIN.showDialog("Lösenordet för kort. Måste vara längre än 6 tecken");
+                        LOGIN.showDialog("Password needs to be at least 6 characters");
                         break;
                     default:
-                        LOGIN.showDialog("Okänt fel. Kontakta shamra@kth.se");
+                        LOGIN.showDialog("Unknown error. Contact shamra@kth.se");
                 }
                 return
             })
         } else {
-            LOGIN.showDialog("Du är redan registrerad! Logga in istället.")
+            LOGIN.showDialog("You already have an account")
             return
         }
     } else {
         // TODO: Varför hamnar vi här ibland? Fel på regex?
-        LOGIN.showDialog("Du måste ange din KTH-mail!")
+        LOGIN.showDialog("You must enter a KTH email address")
         return
     }
 }
@@ -209,10 +208,10 @@ window.LOGIN.verify = function(user) {
     }).catch(function(error) {
         switch (error.code) {
             case 'auth/invalid-email':
-                LOGIN.showDialog("Ogiltlig mailadress");
+                LOGIN.showDialog("Invalid email address");
                 break;
             default:
-                LOGIN.showDialog("Okänt fel: " + error.code)
+                LOGIN.showDialog("Unknown error: " + error.code)
             }
     });
 }

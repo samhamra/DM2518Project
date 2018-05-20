@@ -22,7 +22,7 @@
         <ons-modal id="modal" direction="up">
             <div style="text-align: center">
                 <p>
-                    <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Vänta...
+                    <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Loading...
                 </p>
             </div>
         </ons-modal>
@@ -33,7 +33,7 @@
 <ons-template id="welcome.html">
     <ons-page>
         <img id="logokth" src="img/kth-logo-1.png">
-        <h1> Välkommen till KTHChat! </h1>
+        <h1> KTHChat </h1>
             <!-- old login div
             <div id="firebaseui-auth-container"></div>
             -->
@@ -41,10 +41,10 @@
             <div><input id="user-login" type="text" class="text-input text-input--underbar" placeholder="@kth.se" value=""></div>
             <div><input id="pwd-login" type="password" class="text-input text-input--underbar" placeholder="Lösenord" value=""></div>
             <ons-button id="loginbutton" onclick="LOGIN.goLogin();">
-                Logga in
+                SIGN IN
             </ons-button>
             <ons-button id="ingetkontobutton" onclick="LOGIN.showPage('login.html');">
-                inget konto?
+                SIGN UP
             </ons-button>
         </div>
     </ons-page>
@@ -60,8 +60,7 @@
         <img id="login-logo" src="img/kth-logo-1.png">
         <div id="register-form">
             <p>
-                Hej! För att du ska kunna komma åt KTHCHat, så måste du ha en aktiv KTH-mail.
-                Ange din mail här och aktivera ditt konto via aktiveringsmailet som du får inom kort!
+                Hi! Get access to KTHCHat by signing up with your active KTH email address
             </p>
             <div id="error-register"></div>
             <div><input id="user-register" type="text" class="text-input text-input--underbar" placeholder="Användarnamn" value=""></div>
@@ -69,7 +68,7 @@
             <div><input id="pwd-register" type="password" class="text-input text-input--underbar" placeholder="Lösenord" value=""></div>
             <div><input id="pwd-check-register" type="password" class="text-input text-input--underbar" placeholder="Lösenord igen" value=""></div>
             <ons-button onclick="LOGIN.register()">
-                Registrera
+                SIGN UP
             </ons-button>
         </div>
     </ons-page>
@@ -82,7 +81,7 @@
       <p id="dialog-text">
       </p>
 
-      <ons-button onclick="LOGIN.hideDialog('dialog')">Stäng</ons-button>
+      <ons-button onclick="LOGIN.hideDialog('dialog')">CLOSE</ons-button>
     </div>
   </ons-dialog>
 </template>
