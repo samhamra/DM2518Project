@@ -217,24 +217,23 @@ window.UI.renderPicture = function(board, name, url) {
 }
 
 window.UI.renderMessage = function(board, name, msg) {
-  if(isScrolledToBottom)
-      chat.scrollTop = chat.scrollHeight - chat.clientHeight;
-  }, 500)
+  var scroller = $('#chatContainer .page__content')[0];
+  // scrolled to bottom
+  var isScrolledToBottom = false;
+  if(scroller.scrollTop + scroller.clientHeight === scroller.scrollHeight) {
+    isScrolledToBottom = true;
+  }
+
+
     var container = $(board).append(
         $('<div>').attr('class', function() {return name == firebase.auth().currentUser.displayName ? 'msg-container msg-own' : 'msg-container'})
             .append($('<div>').attr('class', 'msg-userid').text(name))
             .append($('<div>').attr('class', 'msg-content').text(msg))
     );
 
-    function getDocHeight() {
-        var D = document;
-        return Math.max(
-            D.body.scrollHeight, D.documentElement.scrollHeight,
-            D.body.offsetHeight, D.documentElement.offsetHeight,
-            D.body.clientHeight, D.documentElement.clientHeight
-        );
-    }
-
+    if(isScrolledToBottom) {
+        scroller.scrollTop = scroller.scrollHeight - scroller.clientHeight;
+}
 
 
     /*var container = document.createElement("DIV")
