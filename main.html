@@ -90,7 +90,7 @@
 <!-- samma för alla rum -->
 <!-- slänger med id vid instansiering -->
 <ons-template id="chatroom.html">
-    <ons-page>
+    <ons-page id="chatContainer">
         <ons-toolbar id="chat-header">
             <div class="left">
                 <ons-back-button>Lobby</ons-back-button>
@@ -119,7 +119,7 @@
                 <label for="file">
                     <ons-icon icon="md-image" size="30px" style="color:#1954a6;"></ons-icon>
                 </label>
-                
+
                 <ons-icon icon="md-mail-send" size ="40px" style="color:#1954a6;" onclick="firebaseController.post()">
                 </ons-icon>
             </div>
