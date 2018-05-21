@@ -167,7 +167,7 @@ window.LOGIN.register = function() {
                 }, function(error) {
                     console.log("force logout failed")
                 });
-                LOGIN.verify()
+                LOGIN.verify(newUser)
                 $('#loginNavigator')[0].popPage();
                 LOGIN.showDialog("We have sent an email with a confirmation link to your email address");
             }).catch(function(error) {
