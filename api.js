@@ -283,6 +283,7 @@ window.UI.location = function(){
 }
 
 function showPosition(position) {
-    position.coords.latitudeposition.coords.longitude
-
+   $("#locTest").text( "Lat:" + position.coords.latitude + "     Long:" + 
+    position.coords.longitude);
+        console.log($("#locTest").text);
 }
