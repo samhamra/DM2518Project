@@ -171,3 +171,20 @@ img {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.back-button {
+    color: white !important;
+}
+
+#chat-room-header {
+    color: white !important;
+}
+
+#lobby-header {
+    color: white !important;
+}
+
+#toolbar-back-button {
+    fill: white !important;
+    stroke: white !important;
+}
