@@ -50,10 +50,10 @@ h1 {
 }
 
 #msg-toolbar ons-icon {
-    margin-right: 2.5px;
-    margin-left: 2.5px;
-    padding-top: 10px;
-    font-size:20px !important;
+    margin-right: 4px;
+    margin-left: 4px;
+    padding-top: 8px;
+    font-size:30px !important;
     color: #1954a6;
 }
 ons-list-item ons-icon{
@@ -114,8 +114,20 @@ img {
     max-height: auto;
 }
 #msg-input{
-    width: 75%;
+    width: 76%;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
+#fileicon {
+    margin-left: 1em;
+    margin-right: 0.5em;
+}
+#sendIcon {
+    margin-left: 0.5em;
+    margin-right: 1em;
+}
+
+
 .msg-container{
     border-radius: 15px;
     background-color: #dee0e2;
@@ -131,8 +143,12 @@ img {
     text-align: right;
     float: right;
     color: #fff;
-    background-color: #3d82f7;
+    background-color: #1255a0;
 }
+.msg-content{
+    overflow-wrap: break-word;
+}
+
 .profile__img{
     border-radius: 50%;
     border: 1px solid gray;

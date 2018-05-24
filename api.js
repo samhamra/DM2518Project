@@ -218,15 +218,12 @@ window.UI.renderPicture = function(board, name, url) {
 }
 
 window.UI.renderMessage = function(board, name, msg) {
-
     var container = $('<div>').attr('class', function() {return name == firebase.auth().currentUser.displayName ? 'msg-container msg-own' : 'msg-container'})
           .append($('<div>').attr('class', 'msg-userid').text(name))
-          .append($('<div>').attr('class', 'msg-content').text(msg));
+    var msgDiv = $('<div>').attr('class', 'msg-content').text(msg)
+    container.append(msgDiv)
     $(board).append(container);
     return container;
-
-
-
 }
 
 
@@ -283,7 +280,7 @@ window.UI.location = function(){
 }
 
 function showPosition(position) {
-   $("#locTest").text( "Lat:" + position.coords.latitude + "     Long:" + 
+   $("#locTest").text( "Lat:" + position.coords.latitude + "     Long:" +
     position.coords.longitude);
         console.log($("#locTest").text);
 }

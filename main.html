@@ -100,14 +100,7 @@
             </div>
         </ons-toolbar>
 
-        <!-- Messages goes here -->
-        <!-- maybe nice for usage
-        <ons-list>
-            <ons-lazy-repeat id="infinite-list">
 
-            </ons-lazy-repeat>
-        </ons-list>
-        -->
         <div id="messageBoard">
         </div>
 
@@ -115,19 +108,11 @@
             <div class="center" id="msg-toolbar">
                 <input onchange="firebaseController.uploadPicture(event)" type="file" id="file" class="iconFunction" accept="image/*" >
 
-
                 <label for="file">
-                    <ons-icon icon="md-image" ></ons-icon>
+                    <ons-icon id="fileicon" icon="md-image" ></ons-icon>
                 </label>
-
-
-                <textarea id="msg-input" class="textarea" rows="3" cols ="20" placeholder="Type here..." onkeyup="UI.checkPost(event)"></textarea>
-
-
+                <textarea id="msg-input" class="textarea" rows="1" cols ="20" placeholder="Type here..." onkeyup="UI.checkPost(event)"></textarea>
                 <ons-icon id="sendIcon" icon="md-thumb-up" onclick="firebaseController.post()"></ons-icon>
-                <!--
-                <ons-icon icon="md-mail-send" size ="19px" style="color:#1954a6;" onclick="firebaseController.post()"></ons-icon>
-                -->
 
             </div>
         </ons-bottom-toolbar>
