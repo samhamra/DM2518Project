@@ -26,7 +26,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                 loadingScreen.hide();
             });
             */
-            window.location = 'main.html'
+            window.location = './src/html/main.html'
         }
     } else {
         console.log("logged out...")

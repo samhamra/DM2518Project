@@ -24,11 +24,11 @@ firebase.auth().onAuthStateChanged(function(user) {
             //
         } else {
             // Force to login page if email is not verified
-            window.location = 'index.html'
+            window.location = '../../index.html'
         }
     } else {
         console.log("logged out")
-        window.location = 'index.html'
+        window.location = '../../index.html'
     }
 });
 
