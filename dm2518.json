@@ -1,0 +1,59 @@
+{
+  "rooms" : {
+    "DM2518" : {
+      "name" : "Mobile Development with Web Technologies",
+      "color": "#943e92",
+      "messages" : {
+        "LD8fl-TqZOejx417lgD" : {
+          "message" : "Welcome to DM2518 Mobile Development with Web Technologies!",
+          "timestamp" : 1526287116595,
+          "type" : "text"
+        }
+      }
+    },
+    "DD2476" : {
+      "name" : "Search Engines and Information Retrieval Systems",
+      "color": "#3a4f39",
+      "messages" : {
+        "0" : {
+          "message" : "Welcome to DD2476 Search Engines and Information Retrieval Systems!",
+          "timestamp" : 1526287116595,
+          "type" : "text"
+        }
+      }
+    },
+    "DD2421" : {
+      "name" : "Machine Learning",
+      "color": "#009fb5",
+      "messages" : {
+        "0" : {
+          "message" : "Welcome to DD2421 Machine Learning!",
+          "timestamp" : 1526287116595,
+          "type" : "text"
+        }
+      }
+    },
+    "DD2424" : {
+      "name" : "Deep Learning in Data Science",
+      "color": "#f01361",
+      "messages" : {
+        "0" : {
+          "message" : "Welcome to DD2424 Deep Learning in Data Science!",
+          "timestamp" : 1526287116595,
+          "type" : "text"
+        }
+      }
+    },
+    "DD2300" : {
+      "name" : "Program Integrating Course in Computer Science",
+      "color": "#3a4f39",
+      "messages" : {
+        "0" : {
+          "message" : "Welcome to DD2300 Program Integrating Course in Computer Science!",
+          "timestamp" : 1526287116595,
+          "type" : "text"
+        }
+      }
+    }
+  }
+}
